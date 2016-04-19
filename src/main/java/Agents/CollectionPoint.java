@@ -13,7 +13,6 @@ public class CollectionPoint {
     private String name;
     private int count = 0;
 
-
     private static int CHANCE_CLOSEST_CP = 90;
 
     private static ArrayList<CollectionPoint> CPs = new ArrayList<>();
