@@ -1,7 +1,6 @@
 package Tools;
 
 import Agents.GeoLocation;
-import org.apache.commons.math3.distribution.NormalDistribution;
 
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
