@@ -10,9 +10,13 @@ import java.util.ArrayList;
  */
 public class CollectionPoint {
     private GeoLocation location;
+    private String name;
+
+
     private static int CHANCE_CLOSEST_CP = 90;
 
-    public static ArrayList<CollectionPoint> CPs = new ArrayList<>();
+    private static ArrayList<CollectionPoint> CPs = new ArrayList<>();
+
 
 
     public static CollectionPoint getRandomClosestCP(GeoLocation locationAgent) {

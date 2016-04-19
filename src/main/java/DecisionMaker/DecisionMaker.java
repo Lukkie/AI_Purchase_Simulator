@@ -60,4 +60,12 @@ public class DecisionMaker {
 
         return false;
     }
+
+    public static int numberOfDays(){}
+
+    public static CollectionPoint getCP(){
+        CollectionPoint temp = cp;
+        cp = null;
+        return temp;
+    }
 }

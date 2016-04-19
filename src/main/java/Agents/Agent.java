@@ -17,6 +17,10 @@ public class Agent {
         this.profile = profile;
     }
 
+    public void setLocation(GeoLocation location) {
+        this.location = location;
+    }
+
     public GeoLocation getLocation() {
         return location;
     }
