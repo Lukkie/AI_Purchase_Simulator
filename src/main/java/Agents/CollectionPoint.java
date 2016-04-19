@@ -18,7 +18,9 @@ public class CollectionPoint {
 
     private static ArrayList<CollectionPoint> CPs = new ArrayList<>();
 
-
+    public static void pushList(ArrayList<CollectionPoint> collectionPoints){
+        CPs.addAll(collectionPoints);
+    }
 
     public static CollectionPoint getRandomClosestCP(GeoLocation locationAgent) {
         if (CHANCE_CLOSEST_CP > RNG.getInstance().getDouble(0, 100)) {
@@ -58,7 +60,6 @@ public class CollectionPoint {
         s += "\tLocation: "+location.toString();
         return s;
     }
-
 
     public void hasBeenChoosenAsDeleveryPoint(){
         count++;
