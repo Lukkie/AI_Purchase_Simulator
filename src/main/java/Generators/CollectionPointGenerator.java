@@ -17,9 +17,8 @@ import java.util.stream.Stream;
  */
 public class CollectionPointGenerator {
 
-    int amount = 25;
 
-    public ArrayList<CollectionPoint> generateCollectionPoints() {
+    public ArrayList<CollectionPoint> generateCollectionPoints(int amount) {
         ArrayList<CollectionPoint> collectionPoints = new ArrayList<>();
         RNG rng = RNG.getInstance();
 

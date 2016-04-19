@@ -15,7 +15,7 @@ public class AgentGenerator {
 
     private double selfPerceptionFactor = 0.5;
     private double priceQualityPerceptionFactor = 0.5;
-    private double greenPurchaseIntentionFactor = 0.5;
+    private double greenPurchaseIntentionFactor = 0.5; // chanceGreenPopulation
     private double needRecognitionFactor = 0.5;
     private double willingnessToBuyFactor = 0.5;
     private double locationFlexibilityFactor = 0.5;
