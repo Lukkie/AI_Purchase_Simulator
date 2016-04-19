@@ -22,7 +22,7 @@ public class AgentGenerator {
     private double susceptibilityCollectionPointFactor = 0.5;
     private double collectionPointRecommendationFactorFactor = 0.5;
 
-    private final double stddev = 0.5;
+    private final double stddev = 0.2;
 
     public ArrayList<Agent> generateAgents() {
         RNG rng = RNG.getInstance();

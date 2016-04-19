@@ -2,6 +2,8 @@ package GUI;
 
 import Agents.Agent;
 import Generators.AgentGenerator;
+import Generators.ProductGenerator;
+import Shop.ProductProfile;
 import Tools.RNG;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -25,17 +27,21 @@ public class GUIController {
 
     @FXML
     public void initialize() {
-        startConfigButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (event.getButton().equals(MouseButton.PRIMARY)) {
-                    // do iets;
+        startConfigButton.setOnMouseClicked(event -> {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                // do iets;
 
-                    AgentGenerator ag = new AgentGenerator();
-                    for (Agent a: ag.generateAgents()) {
-                        System.out.println(a.toString());
-                    }
+                AgentGenerator ag = new AgentGenerator();
+                for (Agent a: ag.generateAgents()) {
+                    System.out.println(a.toString());
                 }
+
+                ProductGenerator pg = new ProductGenerator();
+                for (ProductProfile p : pg.generateProducts()) {
+                    System.out.println(p.toString());
+                }
+
+
             }
         });
 

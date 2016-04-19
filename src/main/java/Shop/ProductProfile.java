@@ -25,4 +25,25 @@ public class ProductProfile {
     public double getPPD() {
         return perceivedPriceDifference;
     }
+
+    public void setGreenPerceivedValue(double greenPerceivedValue) {
+        this.greenPerceivedValue = greenPerceivedValue;
+    }
+
+    public void setNeedRecognition(double needRecognition) {
+        this.needRecognition = needRecognition;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        String s = "Product:\n";
+        s += "\tGPV: " + greenPerceivedValue +"\n";
+        s += "\tNeed Recognition: " + needRecognition +"\n";
+        s += "\tPrice: " + price;
+        return s;
+    }
 }
