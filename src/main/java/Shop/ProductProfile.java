@@ -9,10 +9,20 @@ public class ProductProfile {
     double greenPerceivedValue;
     double needRecognition;
     double price;
+    double perceivedPriceDifference;
+
 
 
     public double getPerceivedPrice () {
-        double perceivedPriceDifference = (0.5-RNG.getInstance().nextDouble())*1.5; // tussen -0.75 en 0.75
+        perceivedPriceDifference = (0.5-RNG.getInstance().nextDouble())*1.5; // tussen -0.75 en 0.75
         return (1 - perceivedPriceDifference) * price;
+    }
+
+    public double getGPV() {
+        return greenPerceivedValue;
+    }
+
+    public double getPPD() {
+        return perceivedPriceDifference;
     }
 }

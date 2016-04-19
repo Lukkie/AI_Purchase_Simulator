@@ -8,7 +8,7 @@ public class GeoLocation {
     private double longitude;
 
 
-    public double distance(GeoLocation location, String unit) {
+    public double distance(GeoLocation location) {
         double R=6371; // radius earth (in km)
         double theta = longitude - location.getLongitude();
         //dist = arccos(sin(lat1) · sin(lat2) + cos(lat1) · cos(lat2) · cos(lon1 - lon2)) · R

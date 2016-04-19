@@ -17,9 +17,9 @@ public class AgentGenerator {
     private double CollectionPointRecommendationFactorFactor;
 
 
-    public void generateAgents() {
+    public void generateAgents() throws Exception {
         RNG rng = RNG.getInstance();
-        rng.nexGaussian()
+        rng.nextGaussian();
     }
 
     public void setAgentAmount(int agentAmount) {

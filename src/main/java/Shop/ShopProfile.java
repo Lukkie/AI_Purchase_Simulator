@@ -6,9 +6,24 @@ package Shop;
  */
 public class ShopProfile {
 
-    private double greenPerceivedRisk;
-    private double greenPerceivedTrust;
-    private double greenBrandImage;
-    private double environmentalAdvertisement;
+    private static double greenPerceivedRisk;
+    private static double greenPerceivedTrust;
+    private static double greenBrandImage;
+    private static double environmentalAdvertisement;
 
+    public static double getGPR() {
+        return greenPerceivedRisk;
+    }
+
+    public static double getGPT() {
+        return greenPerceivedTrust;
+    }
+
+    public static double getGBI() {
+        return greenBrandImage;
+    }
+
+    public static double getEA() {
+        return environmentalAdvertisement;
+    }
 }

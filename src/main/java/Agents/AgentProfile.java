@@ -86,4 +86,20 @@ public class AgentProfile {
     public void setCollectionPointRecommendationFactor(double collectionPointRecommendationFactor) {
         CollectionPointRecommendationFactor = collectionPointRecommendationFactor;
     }
+
+    public double getGPI() {
+        return greenPurchaseIntention;
+    }
+
+    public double getPQP() {
+        return priceQualityPerception;
+    }
+
+    public double getSP() {
+        return selfPerception;
+    }
+
+    public double getWB() {
+        return willingnessToBuy;
+    }
 }
