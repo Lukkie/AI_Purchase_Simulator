@@ -102,4 +102,18 @@ public class AgentProfile {
     public double getWB() {
         return willingnessToBuy;
     }
+
+    @Override
+    public String toString() {
+        return "AgentProfile{" +
+                "selfPerception=" + selfPerception +
+                ", priceQualityPerception=" + priceQualityPerception +
+                ", greenPurchaseIntention=" + greenPurchaseIntention +
+                ", needRecognition=" + needRecognition +
+                ", willingnessToBuy=" + willingnessToBuy +
+                ", locationFlexibility=" + locationFlexibility +
+                ", susceptibilityCollectionPoint=" + susceptibilityCollectionPoint +
+                ", CollectionPointRecommendationFactor=" + CollectionPointRecommendationFactor +
+                '}';
+    }
 }

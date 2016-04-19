@@ -24,4 +24,13 @@ public class Agent {
     public void setLocation(GeoLocation location) {
         this.location = location;
     }
+
+    @Override
+    public String toString() {
+        String s = "AgentProfile:";
+        s += profile.toString();
+        s+="\n";
+        s += location.toString();
+        return s;
+    }
 }

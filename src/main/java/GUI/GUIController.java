@@ -1,5 +1,7 @@
 package GUI;
 
+import Agents.Agent;
+import Generators.AgentGenerator;
 import Tools.RNG;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -28,6 +30,11 @@ public class GUIController {
             public void handle(MouseEvent event) {
                 if (event.getButton().equals(MouseButton.PRIMARY)) {
                     // do iets;
+
+                    AgentGenerator ag = new AgentGenerator();
+                    for (Agent a: ag.generateAgents()) {
+                        System.out.println(a.toString());
+                    }
                 }
             }
         });
