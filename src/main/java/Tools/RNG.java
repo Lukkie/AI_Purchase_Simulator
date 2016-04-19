@@ -29,13 +29,13 @@ public class RNG {
         return random.nextInt(bound);
     }
 
-    public synchronized void initGuassion(double desiredStandardDeviation, double desiredMean) {
+    public synchronized void initGaussian(double desiredStandardDeviation, double desiredMean) {
         this.initGaussion = true;
         this.standardDev = desiredStandardDeviation;
         this.mean = desiredMean;
     }
 
-    public synchronized double nexGaussion() throws Exception {
+    public synchronized double nexGaussian() throws Exception {
         if(!initGaussion) throw new Exception("Call initGaussion first!");
         return random.nextGaussian()*standardDev+mean;
     }
