@@ -7,6 +7,8 @@ import Shop.ProductProfile;
 import Shop.ShopProfile;
 import Tools.RNG;
 
+import java.util.Date;
+
 /**
  * Created by Gilles Callebaut on 19/04/2016.
  *
@@ -14,6 +16,7 @@ import Tools.RNG;
  */
 public class DecisionMaker {
     private static CollectionPoint cp;
+    public static final int MAX_WAIT_TIME_IN_DAYS = 7;
 
 
     public static boolean willBuy(AgentProfile agent, ProductProfile product) throws Exception {
@@ -43,11 +46,11 @@ public class DecisionMaker {
      */
     public static boolean deliveryToHome(Agent agent, ProductProfile product) throws Exception {
         AgentProfile agentProfile = agent.getProfile();
-        double changeCP = (agentProfile.getSP() + agentProfile.getGPI() + agentProfile.getLocationFlexibility() + agentProfile.getSusceptibilityCollectionPoint())/4;
+        double chanceCP = (agentProfile.getSP() + agentProfile.getGPI() + agentProfile.getLocationFlexibility() + agentProfile.getSusceptibilityCollectionPoint())/4;
 
         double rnd = RNG.getInstance().getDouble(0, 100);
 
-        if(changeCP>rnd)  return true; // delivery to home is selected
+        if(chanceCP>rnd)  return true; // delivery to home is selected
 
         // if susceptible for CP -> choose CP
         if(agentProfile.getSusceptibilityCollectionPoint()<RNG.getInstance().getDouble(0, 100)){
@@ -61,8 +64,31 @@ public class DecisionMaker {
         return false;
     }
 
-    public static int numberOfDays(){
-        
+    /**
+     *
+     * @param agent
+     * @param product
+     * @param preferedNumberOfDate : number of days till preferred pickup
+     * @return
+     */
+    public static int numberOfDays(AgentProfile agent, ProductProfile product, int preferedNumberOfDate){
+        double chanceNotToday = ((100-agent.getNeedRecognition()) + agent.getSP() + agent.getGPI())/3;
+
+        // not today has been choosen
+        if(chanceNotToday>RNG.getInstance().getDouble(0,100)){
+            // first check preferredDate
+            if(preferedNumberOfDate<=MAX_WAIT_TIME_IN_DAYS){
+                if(agent.getSusceptibilityCollectionPoint()<RNG.getInstance().getDouble(0, 100)){
+                    return preferedNumberOfDate;
+                }
+            }
+            // [0 ......... MAX_WAIT_TIME_IN_DAYS]
+            double moved = ((agent.getSP() + agent.getGPI())/2 - agent.getNeedRecognition());
+            double days = ((moved*50)/100) * MAX_WAIT_TIME_IN_DAYS;
+            return (int) days;
+
+        }
+        return 0;
     }
 
     public static CollectionPoint getCP(){
