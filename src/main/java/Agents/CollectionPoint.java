@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class CollectionPoint {
     private GeoLocation location;
     private String name;
+    private int count = 0;
 
 
     private static int CHANCE_CLOSEST_CP = 90;
@@ -58,4 +59,8 @@ public class CollectionPoint {
         return s;
     }
 
+
+    public void hasBeenChoosenAsDeleveryPoint(){
+        count++;
+    }
 }

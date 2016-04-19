@@ -7,8 +7,6 @@ import Shop.ProductProfile;
 import Shop.ShopProfile;
 import Tools.RNG;
 
-import java.util.Date;
-
 /**
  * Created by Gilles Callebaut on 19/04/2016.
  *
@@ -60,6 +58,8 @@ public class DecisionMaker {
         else{
             cp = CollectionPoint.getRandomClosestCP(agent.getLocation());
         }
+
+        cp.hasBeenChoosenAsDeleveryPoint();
 
         return false;
     }
