@@ -4,6 +4,7 @@ import Agents.GeoLocation;
 import org.apache.commons.math3.distribution.NormalDistribution;
 
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by Lukas on 19-Apr-16.
@@ -48,6 +49,16 @@ public class RNG {
         return random.nextGaussian()*desiredStandardDeviation+desiredMean;
     }
 
+    /*
+    min inclusive and max exclusive
+     */
+    public synchronized double getDouble(double min, double max) {
+        return ThreadLocalRandom.current().nextDouble(min, max);
+    }
+
+    public synchronized int getInt(int min, int max) {
+        return ThreadLocalRandom.current().nextInt(min, max);
+    }
     public synchronized GeoLocation getRandomLocation() {
         GeoLocation loc = new GeoLocation();
         final double lat_min = 49.9;

@@ -1,6 +1,8 @@
 package DecisionMaker;
 
+import Agents.Agent;
 import Agents.AgentProfile;
+import Agents.CollectionPoint;
 import Shop.ProductProfile;
 import Shop.ShopProfile;
 import Tools.RNG;
@@ -11,6 +13,8 @@ import Tools.RNG;
  *
  */
 public class DecisionMaker {
+    private static CollectionPoint cp;
+
 
     public static boolean willBuy(AgentProfile agent, ProductProfile product) throws Exception {
         double GPIN = (18/100) * agent.getGPI() + (13/100) * ShopProfile.getGPR() + (17/100) * ShopProfile.getGPT()
@@ -30,5 +34,30 @@ public class DecisionMaker {
         double rndDouble = rng.nextGaussian();
 
         return (changeToBuy / 100) > rndDouble;
+    }
+
+
+    /*
+    @return boolean: if(true) home delivery else collectionPoint
+                     if(false) getCollectionPoint()
+     */
+    public static boolean deliveryToHome(Agent agent, ProductProfile product) throws Exception {
+        AgentProfile agentProfile = agent.getProfile();
+        double changeCP = (agentProfile.getSP() + agentProfile.getGPI() + agentProfile.getLocationFlexibility() + agentProfile.getSusceptibilityCollectionPoint())/4;
+
+        double rnd = RNG.getInstance().getDouble(0, 100);
+
+        if(changeCP>rnd)  return true; // delivery to home is selected
+
+        // if susceptible for CP -> choose CP
+        if(agentProfile.getSusceptibilityCollectionPoint()<RNG.getInstance().getDouble(0, 100)){
+            cp = agentProfile.getCP();
+        }
+        // else choose closest CP
+        else{
+            cp = CollectionPoint.getRandomClosestCP(agent.getLocation());
+        }
+
+        return false;
     }
 }

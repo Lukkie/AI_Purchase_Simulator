@@ -21,6 +21,8 @@ public class AgentProfile {
     private double susceptibilityCollectionPoint;
     private double CollectionPointRecommendationFactor;
 
+    private CollectionPoint CP;
+
 
     /* setters and getters */
     public double getSelfPerception() {
@@ -101,6 +103,10 @@ public class AgentProfile {
 
     public double getWB() {
         return willingnessToBuy;
+    }
+
+    public CollectionPoint getCP() {
+        return CP;
     }
 
     @Override
