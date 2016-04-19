@@ -7,13 +7,19 @@ package Agents;
 public class AgentProfile {
 
     private double selfPerception;          // how sensitive is a consumer to external attributes (price reductions)
-    private double priceQualiteyPerception; // how sensitive is a consumer to too low of a price reduction
+    private double priceQualityPerception; // how sensitive is a consumer to too low of a price reduction
 
     private double greenPurchaseIntention;  // how sensitive is the consumer to buying green products
 
-    private double needRecognizing;         // how sensitive is the consumer to buying products
+    private double needRecognition;         // how sensitive is the consumer to buying products
                                             // this will also depend on the category of the product
 
+    private double willingnessToBuy;
+
+    private double locationFlexibility;
+
+    private double susceptibilityCollectionPoint;
+    private double CollectionPointRecommendationFactor;
 
 
     /* setters and getters */
@@ -25,12 +31,12 @@ public class AgentProfile {
         this.selfPerception = selfPerception;
     }
 
-    public double getPriceQualiteyPerception() {
-        return priceQualiteyPerception;
+    public double getPriceQualityPerception() {
+        return priceQualityPerception;
     }
 
-    public void setPriceQualiteyPerception(double priceQualiteyPerception) {
-        this.priceQualiteyPerception = priceQualiteyPerception;
+    public void setPriceQualityPerception(double priceQualityPerception) {
+        this.priceQualityPerception = priceQualityPerception;
     }
 
     public double getGreenPurchaseIntention() {
@@ -41,11 +47,43 @@ public class AgentProfile {
         this.greenPurchaseIntention = greenPurchaseIntention;
     }
 
-    public double getNeedRecognizing() {
-        return needRecognizing;
+    public double getNeedRecognition() {
+        return needRecognition;
     }
 
-    public void setNeedRecognizing(double needRecognizing) {
-        this.needRecognizing = needRecognizing;
+    public double getWillingnessToBuy() {
+        return willingnessToBuy;
+    }
+
+    public void setWillingnessToBuy(double willingnessToBuy) {
+        this.willingnessToBuy = willingnessToBuy;
+    }
+
+    public double getLocationFlexibility() {
+        return locationFlexibility;
+    }
+
+    public void setLocationFlexibility(double locationFlexibility) {
+        this.locationFlexibility = locationFlexibility;
+    }
+
+    public void setNeedRecognition(double needRecognition) {
+        this.needRecognition = needRecognition;
+    }
+
+    public double getSusceptibilityCollectionPoint() {
+        return susceptibilityCollectionPoint;
+    }
+
+    public void setSusceptibilityCollectionPoint(double susceptibilityCollectionPoint) {
+        this.susceptibilityCollectionPoint = susceptibilityCollectionPoint;
+    }
+
+    public double getCollectionPointRecommendationFactor() {
+        return CollectionPointRecommendationFactor;
+    }
+
+    public void setCollectionPointRecommendationFactor(double collectionPointRecommendationFactor) {
+        CollectionPointRecommendationFactor = collectionPointRecommendationFactor;
     }
 }
