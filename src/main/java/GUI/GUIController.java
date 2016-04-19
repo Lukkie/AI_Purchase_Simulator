@@ -44,7 +44,7 @@ public class GUIController {
                 }
 
                 CollectionPointGenerator cpg = new CollectionPointGenerator();
-                for (CollectionPoint cp: cpg.generateCollectionPoints()) {
+                for (CollectionPoint cp: cpg.generateCollectionPoints(25)) { // 25 aanpassen door shizzle in GUI
                     System.out.println(cp.toString());
                 }
 
