@@ -42,7 +42,20 @@ public class CollectionPoint {
         return location;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public void setLocation(GeoLocation location) {
         this.location = location;
     }
+
+    @Override
+    public String toString() {
+        String s = "CollectionPoint:\n";
+        s += "\tName: "+name+"\n";
+        s += "\tLocation: "+location.toString();
+        return s;
+    }
+
 }

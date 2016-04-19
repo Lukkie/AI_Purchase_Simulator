@@ -1,7 +1,9 @@
 package GUI;
 
 import Agents.Agent;
+import Agents.CollectionPoint;
 import Generators.AgentGenerator;
+import Generators.CollectionPointGenerator;
 import Generators.ProductGenerator;
 import Shop.ProductProfile;
 import Tools.RNG;
@@ -39,6 +41,11 @@ public class GUIController {
                 ProductGenerator pg = new ProductGenerator();
                 for (ProductProfile p : pg.generateProducts()) {
                     System.out.println(p.toString());
+                }
+
+                CollectionPointGenerator cpg = new CollectionPointGenerator();
+                for (CollectionPoint cp: cpg.generateCollectionPoints()) {
+                    System.out.println(cp.toString());
                 }
 
 
