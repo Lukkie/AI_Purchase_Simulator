@@ -25,9 +25,6 @@ public class Agent {
         return location;
     }
 
-    public void setLocation(GeoLocation location) {
-        this.location = location;
-    }
 
     @Override
     public String toString() {
