@@ -1,25 +1,66 @@
 package Generators;
 
+import Agents.Agent;
+import Agents.AgentProfile;
+import Agents.GeoLocation;
 import Tools.RNG;
+
+import java.util.ArrayList;
 
 /**
  * Created by Lukas on 19-Apr-16.
  */
 public class AgentGenerator {
-    private int agentAmount;
-    private double selfPerceptionFactor;
-    private double priceQualityPerceptionFactor;
-    private double greenPurchaseIntentionFactor;
-    private double needRecognitionFactor;
-    private double willingnessToBuyFactor;
-    private double locationFlexibilityFactor;
-    private double susceptibilityCollectionPointFactor;
-    private double CollectionPointRecommendationFactorFactor;
+    private int agentAmount = 100;
 
+    private double selfPerceptionFactor = 0.5;
+    private double priceQualityPerceptionFactor = 0.5;
+    private double greenPurchaseIntentionFactor = 0.5;
+    private double needRecognitionFactor = 0.5;
+    private double willingnessToBuyFactor = 0.5;
+    private double locationFlexibilityFactor = 0.5;
+    private double susceptibilityCollectionPointFactor = 0.5;
+    private double collectionPointRecommendationFactorFactor = 0.5;
 
-    public void generateAgents() throws Exception {
+    private final double stddev = 0.5;
+
+    public ArrayList<Agent> generateAgents() {
         RNG rng = RNG.getInstance();
-        rng.nextGaussian();
+
+        ArrayList<Agent> agents = new ArrayList<>();
+        for (int i = 0; i < agentAmount; i++) {
+            Agent agent = new Agent();
+
+            AgentProfile ap = new AgentProfile();
+            ap.setSelfPerception(getValue(selfPerceptionFactor, stddev, rng));
+
+            ap.setPriceQualityPerception(getValue(priceQualityPerceptionFactor, stddev, rng));
+            ap.setGreenPurchaseIntention(getValue(greenPurchaseIntentionFactor, stddev, rng));
+            ap.setNeedRecognition(getValue(needRecognitionFactor, stddev, rng));
+            ap.setWillingnessToBuy(getValue(willingnessToBuyFactor, stddev, rng));
+            ap.setLocationFlexibility(getValue(locationFlexibilityFactor, stddev, rng));
+            ap.setSusceptibilityCollectionPoint(getValue(susceptibilityCollectionPointFactor, stddev, rng));
+            ap.setCollectionPointRecommendationFactor(getValue(collectionPointRecommendationFactorFactor, stddev, rng));
+            agent.setProfile(ap);
+
+
+            GeoLocation geo = new GeoLocation();
+
+            agent.setLocation(geo);
+
+
+            agents.add(agent);
+        }
+
+        return agents;
+
+    }
+
+    private double getValue(double mean, double stddev, RNG rng)  {
+        double x = rng.nextGaussian(stddev, mean);
+        if (x < 0) x = 0;
+        if (x > 1) x = 1;
+        return x;
     }
 
     public void setAgentAmount(int agentAmount) {
@@ -55,6 +96,7 @@ public class AgentGenerator {
     }
 
     public void setCollectionPointRecommendationFactorFactor(double collectionPointRecommendationFactorFactor) {
-        CollectionPointRecommendationFactorFactor = collectionPointRecommendationFactorFactor;
+        this.collectionPointRecommendationFactorFactor = collectionPointRecommendationFactorFactor;
     }
+
 }

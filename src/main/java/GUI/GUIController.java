@@ -1,5 +1,6 @@
 package GUI;
 
+import Tools.RNG;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -26,7 +27,7 @@ public class GUIController {
             @Override
             public void handle(MouseEvent event) {
                 if (event.getButton().equals(MouseButton.PRIMARY)) {
-                    System.out.println("Test");
+                    System.out.println(RNG.getInstance().getGaussianValue(0.5/3,0.5));
                 }
             }
         });

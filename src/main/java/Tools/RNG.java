@@ -1,5 +1,7 @@
 package Tools;
 
+import org.apache.commons.math3.distribution.NormalDistribution;
+
 import java.util.Random;
 
 /**
@@ -41,8 +43,9 @@ public class RNG {
     }
 
 
-    public synchronized double nextGaussian(double desiredStandardDeviation, double desiredMean) throws Exception {
+    public synchronized double nextGaussian(double desiredStandardDeviation, double desiredMean) {
         return random.nextGaussian()*desiredStandardDeviation+desiredMean;
     }
+
 
 }

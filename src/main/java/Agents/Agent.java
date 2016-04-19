@@ -8,4 +8,20 @@ package Agents;
 public class Agent {
     private AgentProfile profile;
     private GeoLocation location;
+
+    public AgentProfile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(AgentProfile profile) {
+        this.profile = profile;
+    }
+
+    public GeoLocation getLocation() {
+        return location;
+    }
+
+    public void setLocation(GeoLocation location) {
+        this.location = location;
+    }
 }
