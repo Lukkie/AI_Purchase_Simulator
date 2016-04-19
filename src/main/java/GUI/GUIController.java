@@ -27,7 +27,7 @@ public class GUIController {
             @Override
             public void handle(MouseEvent event) {
                 if (event.getButton().equals(MouseButton.PRIMARY)) {
-                    System.out.println(RNG.getInstance().getGaussianValue(0.5/3,0.5));
+                    // do iets;
                 }
             }
         });

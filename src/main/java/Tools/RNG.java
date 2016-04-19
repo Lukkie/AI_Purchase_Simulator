@@ -1,5 +1,6 @@
 package Tools;
 
+import Agents.GeoLocation;
 import org.apache.commons.math3.distribution.NormalDistribution;
 
 import java.util.Random;
@@ -45,6 +46,21 @@ public class RNG {
 
     public synchronized double nextGaussian(double desiredStandardDeviation, double desiredMean) {
         return random.nextGaussian()*desiredStandardDeviation+desiredMean;
+    }
+
+    public synchronized GeoLocation getRandomLocation() {
+        GeoLocation loc = new GeoLocation();
+        final double lat_min = 49.9;
+        final double lat_max = 51.5;
+        final double long_min = 1.3;
+        final double long_max = 7.0;
+
+        double lat = lat_min + random.nextDouble() * (lat_max - lat_min);
+        double longit = long_min + random.nextDouble() * (long_max - long_min);
+
+        loc.setLatitude(lat);
+        loc.setLongitude(longit);
+        return loc;
     }
 
 

@@ -44,8 +44,7 @@ public class AgentGenerator {
             agent.setProfile(ap);
 
 
-            GeoLocation geo = new GeoLocation();
-
+            GeoLocation geo = rng.getRandomLocation();
             agent.setLocation(geo);
 
 
