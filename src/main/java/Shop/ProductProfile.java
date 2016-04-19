@@ -12,7 +12,7 @@ public class ProductProfile {
 
 
     public double getPerceivedPrice () {
-        double perceivedPriceDifference = RNG.getInstance().nextDouble()
-        return (1 - ppd) * p
+        double perceivedPriceDifference = (0.5-RNG.getInstance().nextDouble())*1.5; // tussen -0.75 en 0.75
+        return (1 - perceivedPriceDifference) * price;
     }
 }

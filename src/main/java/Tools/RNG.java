@@ -35,9 +35,14 @@ public class RNG {
         this.mean = desiredMean;
     }
 
-    public synchronized double nexGaussian() throws Exception {
+    public synchronized double nextGaussian() throws Exception {
         if(!initGaussion) throw new Exception("Call initGaussion first!");
         return random.nextGaussian()*standardDev+mean;
+    }
+
+
+    public synchronized double nextGaussian(double desiredStandardDeviation, double desiredMean) throws Exception {
+        return random.nextGaussian()*desiredStandardDeviation+desiredMean;
     }
 
 }
