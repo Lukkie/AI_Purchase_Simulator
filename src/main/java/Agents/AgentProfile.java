@@ -1,5 +1,7 @@
 package Agents;
 
+import java.util.Date;
+
 /**
  * This class will represent a profile of an agent
  * These parameters will contribute to the consummation decision
@@ -22,6 +24,7 @@ public class AgentProfile {
     private double CollectionPointRecommendationFactor;
 
     private CollectionPoint recommendedCP; // recommendedCP recommended by someone close
+    private Date recommendedDate;
 
 
     /* setters and getters */
@@ -125,5 +128,9 @@ public class AgentProfile {
 
     public void setRecommendedCP(CollectionPoint recommendedCP) {
         this.recommendedCP = recommendedCP;
+    }
+
+    public Date getRecommendedDate() {
+        return recommendedDate;
     }
 }

@@ -19,8 +19,8 @@ public class PurchaseThreadPool implements Runnable{
     private Agent prevAgent = null;
     private Agent influencedAgent = null;
 
-    public Date today = new Date();
-    private int dateChangeChanceCounter = 5;
+    public static Date today = new Date();
+    private static int dateChangeChanceCounter = 5;
 
     public PurchaseThreadPool(ArrayList<Agent> agentList, ArrayList<ProductProfile> productList) {
         EntityPool.setAgents(agentList);
@@ -47,9 +47,8 @@ public class PurchaseThreadPool implements Runnable{
                         agent = EntityPool.getRandomAgent();
                     }
                 }
-
                 System.out.println("\t--------------- PurchaseThread started ---------------");
-                influencedAgent = new PurchaseThread(agent, product, prevAgent).start();
+                influencedAgent = new PurchaseThread(agent, product, prevAgent, today).start();
                 System.out.println("\t--------------- PurchaseThread ended ---------------");
                 prevAgent = agent;
             } catch (Exception e) {

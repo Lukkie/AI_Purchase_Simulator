@@ -11,15 +11,17 @@ import java.util.Date;
  */
 class PurchaseThread {
     private final Agent prevAgent;
+    private final Date today;
     private Agent agent;
     private ProductProfile product;
     private CollectionPoint cp;
-    private Date date;
+    private Date today;
 
-    PurchaseThread(Agent agent, ProductProfile product, Agent prevAgent) {
+    PurchaseThread(Agent agent, ProductProfile product, Agent prevAgent, Date today) {
         this.agent = agent;
         this.product = product;
         this.prevAgent = prevAgent;
+        this.today = (Date) today.clone();
     }
 
     Agent start() throws Exception {
@@ -34,7 +36,7 @@ class PurchaseThread {
 
 
         boolean isHomeDelivery = decisionMaker.deliveryToHome();
-        int preferredNamOfDays = 0; //TODO in agentProfile.CP and agentPrifle.CPDate
+        int preferredNamOfDays = Tools.DateUtil.getDifferenceDays(today, this.agent.getProfile().getRecommendedDate());
         decisionMaker.numberOfDays(preferredNamOfDays);
 
         int beginNumOfDays = decisionMaker.getBeginNumberOfDays();
