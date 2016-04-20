@@ -7,6 +7,8 @@ public class GeoLocation {
     private double latitude;
     private double longitude;
 
+    public final static double MAX_DIST_TO_BE_INFLUENCED_IN_KM = 10;
+
 
     public double distance(GeoLocation location) {
         double R=6371; // radius earth (in km)
@@ -37,6 +39,18 @@ public class GeoLocation {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        GeoLocation that = (GeoLocation) o;
+
+        if (Double.compare(that.latitude, latitude) != 0) return false;
+        return Double.compare(that.longitude, longitude) == 0;
+
     }
 
     @Override

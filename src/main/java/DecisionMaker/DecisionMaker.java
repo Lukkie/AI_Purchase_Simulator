@@ -65,7 +65,7 @@ public class DecisionMaker {
 
         // if susceptible for CP -> choose CP
         if(agentProfile.getSusceptibilityCollectionPoint()<RNG.getInstance().getDouble(0, 100)){
-            cp = agentProfile.getCP();
+            cp = agentProfile.getRecommendedCP();
         }
         // else choose closest CP
         else{

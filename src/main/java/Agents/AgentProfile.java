@@ -21,7 +21,7 @@ public class AgentProfile {
     private double susceptibilityCollectionPoint;
     private double CollectionPointRecommendationFactor;
 
-    private CollectionPoint CP;
+    private CollectionPoint recommendedCP; // recommendedCP recommended by someone close
 
 
     /* setters and getters */
@@ -105,8 +105,8 @@ public class AgentProfile {
         return willingnessToBuy;
     }
 
-    public CollectionPoint getCP() {
-        return CP;
+    public CollectionPoint getRecommendedCP() {
+        return recommendedCP;
     }
 
     @Override
@@ -121,5 +121,9 @@ public class AgentProfile {
                 ", susceptibilityCollectionPoint=" + susceptibilityCollectionPoint +
                 ", CollectionPointRecommendationFactor=" + CollectionPointRecommendationFactor +
                 '}';
+    }
+
+    public void setRecommendedCP(CollectionPoint recommendedCP) {
+        this.recommendedCP = recommendedCP;
     }
 }
