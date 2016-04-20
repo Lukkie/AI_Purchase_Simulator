@@ -25,7 +25,13 @@ class PurchaseThread {
     Agent start() throws Exception {
         DecisionMaker decisionMaker = new DecisionMaker(agent, product);
 
-        if(!decisionMaker.willBuy()) return null;
+        if(!decisionMaker.willBuy()){
+            System.out.println("\t\t Will NOT buy");
+            return null;
+        }else{
+            System.out.println("\t\t Will buy");
+        }
+
 
         boolean isHomeDelivery = decisionMaker.deliveryToHome();
         int preferredNamOfDays = 0; //TODO in agentProfile.CP and agentPrifle.CPDate
@@ -49,6 +55,7 @@ class PurchaseThread {
         }
         Agent influencedAgent = EntityPool.getRandomAgent();
         boolean isInfluenced = influencedAgent.influenceBuyBehaviour(agent,choosenCP);
+
 
         return (isInfluenced) ? influencedAgent : null;
     }

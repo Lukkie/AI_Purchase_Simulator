@@ -2,6 +2,7 @@ package GUI;
 
 import Agents.Agent;
 import Agents.CollectionPoint;
+import Agents.PurchaseThreadPool;
 import Generators.AgentGenerator;
 import Generators.CollectionPointGenerator;
 import Generators.ProductGenerator;
@@ -48,6 +49,8 @@ public class GUIController {
                     System.out.println(cp.toString());
                 }
 
+                PurchaseThreadPool pool = new PurchaseThreadPool(ag.generateAgents(), pg.generateProducts());
+                pool.run();
 
             }
         });

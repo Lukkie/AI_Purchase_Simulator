@@ -2,6 +2,8 @@ package Tools;
 
 import Agents.GeoLocation;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -72,6 +74,7 @@ public class RNG {
         loc.setLongitude(longit);
         return loc;
     }
+
 
 
 }
