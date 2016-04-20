@@ -11,7 +11,6 @@ import java.util.Date;
  */
 class PurchaseThread {
     private final Agent prevAgent;
-    private final Date today;
     private Agent agent;
     private ProductProfile product;
     private CollectionPoint cp;
