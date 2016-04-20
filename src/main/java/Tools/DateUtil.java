@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Gilles Callebaut on 20/04/2016.
+ *
  */
 public class DateUtil {
     public static Date addDays(Date date, int days){

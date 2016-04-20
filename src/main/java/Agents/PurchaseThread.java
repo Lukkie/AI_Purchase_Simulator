@@ -35,19 +35,29 @@ class PurchaseThread {
 
 
         boolean isHomeDelivery = decisionMaker.deliveryToHome();
-        int preferredNamOfDays = Tools.DateUtil.getDifferenceDays(today, this.agent.getProfile().getRecommendedDate());
-        decisionMaker.numberOfDays(preferredNamOfDays);
+        Date recommendedDate = this.agent.getProfile().getRecommendedDate();
+        int preferredNumOfDays;
+        if(recommendedDate==null){
+            preferredNumOfDays = -1;
+        }else{
+            preferredNumOfDays = Tools.DateUtil.getDifferenceDays(today, recommendedDate);
+        }
+
+
+        decisionMaker.numberOfDays(preferredNumOfDays);
 
         int beginNumOfDays = decisionMaker.getBeginNumberOfDays();
         int endNumOfDays = decisionMaker.getEndNumberOfDays();
 
-        //TODO Data objects
+        Date earliest = Tools.DateUtil.addDays(today,beginNumOfDays);
+        Date latest = Tools.DateUtil.addDays(today,endNumOfDays);
 
         if(!isHomeDelivery) cp = decisionMaker.getCP();
-        //Tools.Logger.writeDelivery(agent,product,cp,date);
 
+
+        boolean isInfluenced;
         // influence other agents
-        if(prevAgent==null) return null;
+        if(prevAgent==null) isInfluenced =  false;
         CollectionPoint choosenCP;
         if(cp.getLocation().equals(agent.getLocation())){
             choosenCP=null;
@@ -55,9 +65,9 @@ class PurchaseThread {
             choosenCP = cp;
         }
         Agent influencedAgent = EntityPool.getRandomAgent();
-        boolean isInfluenced = influencedAgent.influenceBuyBehaviour(agent,choosenCP);
+        isInfluenced = influencedAgent.influenceBuyBehaviour(agent,choosenCP);
 
-
+        Tools.Logger.writeDelivery(agent,product,cp,today, earliest,latest,beginNumOfDays,endNumOfDays,isHomeDelivery,isInfluenced,recommendedDate,agent.getProfile().getRecommendedCP());
         return (isInfluenced) ? influencedAgent : null;
     }
 }

@@ -84,7 +84,7 @@ public class DecisionMaker {
         // not today has been choosen
         if(chanceNotToday>RNG.getInstance().getDouble(0,100)){
             // first check preferredDate
-            if(preferedNumberOfDate<=MAX_WAIT_TIME_IN_DAYS){
+            if(preferedNumberOfDate<=MAX_WAIT_TIME_IN_DAYS && preferedNumberOfDate>=0){
                 if(agentProfile.getSusceptibilityCollectionPoint()<RNG.getInstance().getDouble(0, 100)){
                     beginNumberOfDays =  preferedNumberOfDate;
                     endNumberOfDays = preferedNumberOfDate;
