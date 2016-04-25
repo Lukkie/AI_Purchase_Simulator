@@ -41,6 +41,8 @@ public class DecisionMaker {
         if(quality<0) quality = 100 - quality;
         if(pp<0) pp = 100 - pp;
 
+        //first change WB based on previous purchases
+        agent.changeWB();
         double changeToBuy = (GPIN + quality + pp + agentProfile.getWB())/4;
 
         RNG rng = RNG.getInstance();

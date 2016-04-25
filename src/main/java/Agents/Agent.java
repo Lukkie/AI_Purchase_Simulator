@@ -1,6 +1,9 @@
 package Agents;
 
+import Tools.DateUtil;
 import Tools.RNG;
+
+import java.util.Date;
 
 /**
  * This is an agent who will order some products
@@ -8,8 +11,11 @@ import Tools.RNG;
  * the agent will make a choice on how and when the delivery will proceed
  */
 public class Agent {
+    private static final int MAX_NUMBER_NO_BUY = 100;
     private AgentProfile profile;
     private GeoLocation location;
+
+    private Date lastTimeBoughtSomething;
 
     public AgentProfile getProfile() {
         return profile;
@@ -47,10 +53,27 @@ public class Agent {
 
         // adjust willingnessToBuy and recommended CP if not null
         double wb = this.profile.getWB();
-        this.profile.setCollectionPointRecommendationFactor(wb + (100-wb)*(100-dist*GeoLocation.MAX_DIST_TO_BE_INFLUENCED_IN_KM));
+        this.profile.setWB(wb + (100-wb)*(100-dist*GeoLocation.MAX_DIST_TO_BE_INFLUENCED_IN_KM)/100);
 
         if(choosenCP!=null) this.profile.setRecommendedCP(choosenCP);
 
         return true;
+    }
+
+    public void changeWB() {
+        if(lastTimeBoughtSomething==null) return;
+        int diff = DateUtil.getDifferenceDays(lastTimeBoughtSomething,PurchaseThreadPool.today);
+
+        if(diff>MAX_NUMBER_NO_BUY){
+            double currentWB = this.profile.getWB();
+            double max = currentWB*RNG.getInstance().getDouble(60,90);
+            double newWB = currentWB - RNG.getInstance().getDouble(0,max);
+            this.profile.setWB(newWB);
+            return;
+        }
+    }
+
+    public void setLastPurchaseDate(Date lastPurchaseDate) {
+        this.lastTimeBoughtSomething = lastPurchaseDate;
     }
 }

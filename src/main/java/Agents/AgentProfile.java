@@ -133,4 +133,8 @@ public class AgentProfile {
     public Date getRecommendedDate() {
         return recommendedDate;
     }
+
+    public void setWB(double WB) {
+        this.willingnessToBuy = WB;
+    }
 }
