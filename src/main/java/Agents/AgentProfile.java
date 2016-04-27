@@ -141,6 +141,10 @@ public class AgentProfile {
                 "\n}\n";
     }
 
+    public boolean isAlwaysAtHome() {
+        return alwaysAtHome;
+    }
+
     public void setRecommendedCP(CollectionPoint recommendedCP) {
         this.recommendedCP = recommendedCP;
     }
