@@ -165,10 +165,10 @@ public class AgentProfile {
     }
 
     public double getShopReputation() {
-        return shopReputation;
+        return reputationShop;
     }
 
     public void setShopReputation(double shopReputation) {
-        this.shopReputation = shopReputation;
+        this.reputationShop = shopReputation;
     }
 }
