@@ -24,6 +24,7 @@ public class AgentProfile {
     private double CollectionPointRecommendationFactor;
 
     private boolean alwaysAtHome; // true if delivery always at home
+    private double reputationShop;
 
     private CollectionPoint recommendedCP; // recommendedCP recommended by someone close
     private Date recommendedDate;

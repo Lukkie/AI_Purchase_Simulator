@@ -56,7 +56,7 @@ public class Agent {
 
         // adjust willingnessToBuy and recommended CP if not null
         double wb = this.profile.getWB();
-        double newWB = wb + (1-wb)*(100-dist*GeoLocation.MAX_DIST_TO_BE_INFLUENCED_IN_KM);
+        double newWB = wb + (1-wb)*((100-dist*GeoLocation.MAX_DIST_TO_BE_INFLUENCED_IN_KM)/100);
         this.profile.setWB(newWB);
         System.out.println("WB changed from "+wb+" to "+newWB);
 
@@ -68,17 +68,17 @@ public class Agent {
     public void changeWB() {
         if(lastTimeBoughtSomething==null) return;
         int diff = DateUtil.getDifferenceDays(lastTimeBoughtSomething,PurchaseThreadPool.today);
-
+        System.out.println("Previous buy was "+diff+" day(s) ago");
         if(diff>MAX_NUMBER_NO_BUY){
             double currentWB = this.profile.getWB();
             double max = currentWB*RNG.getInstance().getDouble(0.6,0.9);
             double newWB = currentWB - RNG.getInstance().getDouble(0,max);
+            System.out.println("WB is changed from "+currentWB+" to "+newWB);
             this.profile.setWB(newWB);
-            return;
         }
     }
 
-    public void setLastPurchaseDate(Date lastPurchaseDate) {
+    void setLastPurchaseDate(Date lastPurchaseDate) {
         this.lastTimeBoughtSomething = lastPurchaseDate;
     }
 }
