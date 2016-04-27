@@ -28,6 +28,7 @@ public class AgentProfile {
 
     private CollectionPoint recommendedCP; // recommendedCP recommended by someone close
     private Date recommendedDate;
+    private double shopReputation;
 
 
     /* setters and getters */
@@ -83,7 +84,7 @@ public class AgentProfile {
         this.needRecognition = needRecognition;
     }
 
-    public double getSusceptibilityCollectionPoint() {
+    public double getSusceptibility() {
         return susceptibilityCollectionPoint;
     }
 
@@ -150,5 +151,13 @@ public class AgentProfile {
 
     public void setWB(double WB) {
         this.willingnessToBuy = WB;
+    }
+
+    public double getShopReputation() {
+        return shopReputation;
+    }
+
+    public void setShopReputation(double shopReputation) {
+        this.shopReputation = shopReputation;
     }
 }

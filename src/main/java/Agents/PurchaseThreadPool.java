@@ -5,6 +5,7 @@ import Tools.RNG;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  * Created by Gilles Callebaut on 19/04/2016.
@@ -22,6 +23,8 @@ public class PurchaseThreadPool implements Runnable{
     public static Date today = new Date();
     private static int dateChangeChanceCounter = 5;
 
+    private static HashMap<Date,ArrayList<Agent>> deliveries = new HashMap<>();
+
     public PurchaseThreadPool(ArrayList<Agent> agentList, ArrayList<ProductProfile> productList) {
         EntityPool.setAgents(agentList);
         EntityPool.setProducts(productList);
@@ -33,6 +36,7 @@ public class PurchaseThreadPool implements Runnable{
         while (!stop){
             try {
                 changeDay();
+                checkDay();
                 Agent agent;
                 ProductProfile product = EntityPool.getRandomProduct();
                 // if prev agent influenced another agent, the other agent has a higher chance of buying
@@ -62,6 +66,16 @@ public class PurchaseThreadPool implements Runnable{
         System.out.println("---------------------- ThreadPool ended ----------------------");
     }
 
+    private void checkDay() {
+        for(Date d: deliveries.keySet()){
+            if(Tools.DateUtil.getDifferenceDays(today, d)>=0){
+                for(Agent a: deliveries.get(d)){
+                    a.wordOfMouth();
+                }
+            }
+        }
+    }
+
     /**
      * Randomly chance the date based on the amount of deliveries made
      */
@@ -74,5 +88,16 @@ public class PurchaseThreadPool implements Runnable{
             dateChangeChanceCounter += Tools.RNG.getInstance().getDouble(0,10);
         }
         System.out.println("Current day: "+today.getDay());
+    }
+
+    public static void addDelivery(Agent a, Date lastDay){
+        System.out.println("\nAdded Agent:"+a+" date: "+lastDay);
+        if(deliveries.containsKey(lastDay)){
+            deliveries.get(lastDay).add(a);
+        }else{
+            ArrayList<Agent> agents = new ArrayList<>();
+            agents.add(a);
+            deliveries.put(lastDay,new ArrayList<>(agents));
+        }
     }
 }
