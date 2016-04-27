@@ -155,4 +155,12 @@ public class AgentProfile {
     public void setWB(double WB) {
         this.willingnessToBuy = WB;
     }
+
+    public double getReputationShop() {
+        return reputationShop;
+    }
+
+    public void setReputationShop(double reputationShop) {
+        this.reputationShop = reputationShop;
+    }
 }

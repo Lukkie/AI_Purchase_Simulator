@@ -50,24 +50,23 @@
                         <Slider fx:id="agentSusceptibilityCPSlider" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                         <Slider fx:id="agentCPRecommendationSlider" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                         <Slider fx:id="agentPercentageAtHomeSlider" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                        <Slider GridPane.columnIndex="1" GridPane.rowIndex="9" />
-                        <Slider GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                        <Slider fx:id="agentShopReputationSlider" GridPane.columnIndex="1" GridPane.rowIndex="9" />
                         <Label text="Need recognition" GridPane.rowIndex="3" />
                         <Label text="Willingness to buy" GridPane.rowIndex="4" />
                         <Label text="Location flexibility" GridPane.rowIndex="5" />
                         <Label text="Susceptibility to collection points" GridPane.rowIndex="6" />
                         <Label text="Collection point recommendation" GridPane.rowIndex="7" />
                         <Label text="Percentage always at home" GridPane.rowIndex="8" />
-                        <Label text="Label" GridPane.rowIndex="9" />
-                        <Label text="Label" GridPane.rowIndex="10" />
+                        <Label text="Shop reputation" GridPane.rowIndex="9" />
+                        <Label text="Number of agents" GridPane.rowIndex="10" />
                         <TextField fx:id="agentNeedRecognitionTextField" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                         <TextField fx:id="agentWTBTextField" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                         <TextField fx:id="agentLocationFlexibilityTextField" GridPane.columnIndex="2" GridPane.rowIndex="5" />
                         <TextField fx:id="agentSusceptibilityCPTextField" GridPane.columnIndex="2" GridPane.rowIndex="6" />
                         <TextField fx:id="agentCPRecommendationTextField" GridPane.columnIndex="2" GridPane.rowIndex="7" />
                         <TextField fx:id="agentPercentageAtHomeTextField" GridPane.columnIndex="2" GridPane.rowIndex="8" />
-                        <TextField GridPane.columnIndex="2" GridPane.rowIndex="9" />
-                        <TextField GridPane.columnIndex="2" GridPane.rowIndex="10" />
+                        <TextField fx:id="agentShopReputationTextField" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+                        <TextField fx:id="agentNumberTextField" GridPane.columnIndex="1" GridPane.rowIndex="10" />
                      </children>
                   </GridPane>
                </children></AnchorPane>
@@ -82,22 +81,22 @@
                         <Label text="Green perceived value" />
                         <Label text="Need recognition" GridPane.rowIndex="1" />
                         <Label text="Mean price" GridPane.rowIndex="2" />
-                        <Slider GridPane.columnIndex="1" />
-                        <Slider GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Slider GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <TextField GridPane.columnIndex="2" />
-                        <TextField GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                        <TextField GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                        <Slider GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Slider GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Slider fx:id="productGPVSlider" GridPane.columnIndex="1" />
+                        <Slider fx:id="productNeedRecognitionSlider" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Slider fx:id="productMeanPriceSlider" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="productGPVTextField" GridPane.columnIndex="2" />
+                        <TextField fx:id="productNeedRecognitionTextField" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <TextField fx:id="productMeanPriceTextField" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <Slider fx:id="productStddevSlider" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Slider fx:id="productAvailabilitySlider" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                         <Slider GridPane.columnIndex="1" GridPane.rowIndex="5" />
                         <Slider GridPane.columnIndex="1" GridPane.rowIndex="6" />
                         <Label text="Price standard deviation" GridPane.rowIndex="3" />
-                        <Label text="Product availability" GridPane.rowIndex="4" />
+                        <Label text="Availability" GridPane.rowIndex="4" />
                         <Label text="Label" GridPane.rowIndex="5" />
                         <Label text="Label" GridPane.rowIndex="6" />
-                        <TextField GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                        <TextField GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                        <TextField fx:id="productStddevTextField" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                        <TextField fx:id="productAvailabilityTextField" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                         <TextField GridPane.columnIndex="2" GridPane.rowIndex="5" />
                         <TextField GridPane.columnIndex="2" GridPane.rowIndex="6" />
                      </children>
@@ -119,7 +118,7 @@
                </children></AnchorPane>
       </content>
     </Tab>
-      <Tab text="Shop configuration">
+      <Tab fx:id="shopTab" text="Shop configuration">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
@@ -128,20 +127,20 @@
                         <Label text="Green perceived risk" />
                         <Label text="Green perceived trust" GridPane.rowIndex="1" />
                         <Label text="Green brand image" GridPane.rowIndex="2" />
-                        <Slider GridPane.columnIndex="1" />
-                        <Slider GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Slider GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <TextField GridPane.columnIndex="2" />
-                        <TextField GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                        <TextField GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                        <Slider GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Slider GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Slider fx:id="shopGPRSlider" GridPane.columnIndex="1" />
+                        <Slider fx:id="shopGPTSlider" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Slider fx:id="shopGBISlider" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="shopGPRTextField" GridPane.columnIndex="2" />
+                        <TextField fx:id="shopGPTTextField" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <TextField fx:id="shopGBITextField" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <Slider fx:id="shopEASlider" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Slider fx:id="shopServiceSlider" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                         <Slider GridPane.columnIndex="1" GridPane.rowIndex="5" />
                         <Slider GridPane.columnIndex="1" GridPane.rowIndex="6" />
                         <Slider GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                        <TextField GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                        <TextField fx:id="shopEATextField" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                         <TextField GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                        <TextField GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                        <TextField fx:id="shopServiceTextField" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                         <TextField GridPane.columnIndex="2" GridPane.rowIndex="6" />
                         <TextField GridPane.columnIndex="2" GridPane.rowIndex="7" />
                         <Label text="Environmental advertisment" GridPane.rowIndex="3" />
@@ -170,17 +169,17 @@
             </AnchorPane>
         </content>
       </Tab>
-      <Tab text="Collectionpoint configuration">
+      <Tab fx:id="collectionPointTab" text="Collectionpoint configuration">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <TextField layoutX="307.0" layoutY="265.0" />
+                  <TextField fx:id="CPTextField" layoutX="307.0" layoutY="265.0" />
                   <Label layoutX="306.0" layoutY="230.0" text="Number of collection points:" />
                </children>
             </AnchorPane>
         </content>
       </Tab>
-      <Tab text="Simulation">
+      <Tab fx:id="simulationTab" text="Simulation">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>

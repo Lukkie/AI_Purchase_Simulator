@@ -8,6 +8,7 @@ import Generators.CollectionPointGenerator;
 import Generators.ProductGenerator;
 import Shop.ProductProfile;
 import Tools.RNG;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -37,6 +38,7 @@ public class GUIController {
     public Slider agentLocationFlexibilitySlider;
     public Slider agentSusceptibilityCPSlider;
     public Slider agentCPRecommendationSlider;
+    public Slider agentShopReputationSlider;
     public TextField agentSelfPerceptionTextField;
     public TextField agentPriceQualityPerceptionTextField;
     public TextField agentGreenPurchaseIntentionTextField;
@@ -46,11 +48,43 @@ public class GUIController {
     public TextField agentSusceptibilityCPTextField;
     public TextField agentCPRecommendationTextField;
     public TextField agentPercentageAtHomeTextField;
+    public TextField agentShopReputationTextField;
+    public TextField agentNumberTextField;
+
 
     @FXML
     public Tab productsTab;
+    public Slider productGPVSlider;
+    public Slider productNeedRecognitionSlider;
+    public Slider productMeanPriceSlider;
+    public Slider productStddevSlider;
+    public Slider productAvailabilitySlider;
+    public TextField productStddevTextField;
+    public TextField productAvailabilityTextField;
+    public TextField productGPVTextField;
+    public TextField productNeedRecognitionTextField;
+    public TextField productMeanPriceTextField;
 
     @FXML
+    public Tab shopTab;
+    public Slider shopGPRSlider;
+    public Slider shopGPTSlider;
+    public Slider shopGBISlider;
+    public Slider shopEASlider;
+    public Slider shopServiceSlider;
+    public TextField shopGPRTextField;
+    public TextField shopGBITextField;
+    public TextField shopEATextField;
+    public TextField shopGPTTextField;
+    public TextField shopServiceTextField;
+
+    @FXML
+    public Tab collectionPointTab;
+    public TextField CPTextField;
+
+
+    @FXML
+    public Tab simulationTab;
     public Button startConfigButton;
 
 
@@ -90,41 +124,83 @@ public class GUIController {
             }
         });
 
-        initializeSliderAndTextField(agentSelfPerceptionSlider, agentSelfPerceptionTextField, 0.5);
-        initializeSliderAndTextField(agentWTBSlider, agentWTBTextField, 0.5);
-        initializeSliderAndTextField(agentCPRecommendationSlider, agentCPRecommendationTextField, 0.5);
-        initializeSliderAndTextField(agentLocationFlexibilitySlider, agentLocationFlexibilityTextField, 0.5);
-        initializeSliderAndTextField(agentNeedRecognitionSlider, agentNeedRecognitionTextField, 0.5);
-        initializeSliderAndTextField(agentSusceptibilityCPSlider, agentSusceptibilityCPTextField, 0.5);
-        initializeSliderAndTextField(agentGreenPurchaseIntentionSlider, agentGreenPurchaseIntentionTextField, 0.5);
-        initializeSliderAndTextField(agentPriceQualityPerceptionSlider, agentPriceQualityPerceptionTextField, 0.5);
-        initializeSliderAndTextField(agentPercentageAtHomeSlider, agentPercentageAtHomeTextField, 0.1);
+
+        // Agents
+        initializeSliderAndTextField(agentSelfPerceptionSlider, agentSelfPerceptionTextField, 50, 0, 100, 1);
+        initializeSliderAndTextField(agentWTBSlider, agentWTBTextField, 50, 0, 100, 1);
+        initializeSliderAndTextField(agentCPRecommendationSlider, agentCPRecommendationTextField, 50, 0, 100, 1);
+        initializeSliderAndTextField(agentLocationFlexibilitySlider, agentLocationFlexibilityTextField, 50, 0, 100, 1);
+        initializeSliderAndTextField(agentNeedRecognitionSlider, agentNeedRecognitionTextField, 50, 0, 100, 1);
+        initializeSliderAndTextField(agentSusceptibilityCPSlider, agentSusceptibilityCPTextField, 50, 0, 100, 1);
+        initializeSliderAndTextField(agentGreenPurchaseIntentionSlider, agentGreenPurchaseIntentionTextField, 50, 0, 100, 1);
+        initializeSliderAndTextField(agentPriceQualityPerceptionSlider, agentPriceQualityPerceptionTextField, 50, 0, 100, 1);
+        initializeSliderAndTextField(agentPercentageAtHomeSlider, agentPercentageAtHomeTextField, 10, 0, 100, 1);
+        initializeSliderAndTextField(agentShopReputationSlider, agentShopReputationTextField, 50, 0, 100, 1);
+        setNotZeroTextField(agentNumberTextField, 100);
+
+        // Products
+        initializeSliderAndTextField(productAvailabilitySlider, productAvailabilityTextField, 50, 0, 100, 1);
+        initializeSliderAndTextField(productGPVSlider, productGPVTextField, 50, 0, 100, 1);
+        initializeSliderAndTextField(productStddevSlider, productStddevTextField, 50, 0, 200, 1);
+        initializeSliderAndTextField(productMeanPriceSlider, productMeanPriceTextField, 200, 1, 500, 1);
+        initializeSliderAndTextField(productNeedRecognitionSlider, productNeedRecognitionTextField, 50, 0, 100, 1);
+
+        // Shop
+        initializeSliderAndTextField(shopEASlider, shopEATextField, 50, 0, 100, 1);
+        initializeSliderAndTextField(shopGBISlider, shopGBITextField, 50, 0, 100, 1);
+        initializeSliderAndTextField(shopGPRSlider, shopGPRTextField, 50, 0, 100, 1);
+        initializeSliderAndTextField(shopGPTSlider, shopGPTTextField, 50, 0, 100, 1);
+        initializeSliderAndTextField(shopServiceSlider, shopServiceTextField, 50, 0, 100, 1);
+
+        // Collection points
+        setNotZeroTextField(CPTextField, 25);
+    }
+
+    private void setNotZeroTextField(TextField textField, int defaultValue) {
+        textField.textProperty().setValue(Integer.toString(defaultValue));
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                textField.setText(oldValue);
+            }
+        });
+        textField.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {
+                if (!textField.getText().matches("\\d*")) {
+                    textField.setText(Integer.toString(defaultValue));
+                }
+                else if (Integer.parseInt(textField.getText()) == 0) {
+                    textField.setText("1");
+                }
+            }
+        });
     }
 
 
-    private void initializeSliderAndTextField(Slider slider, TextField textField, double defaultValue) {
-        slider.setMin(0);
-        slider.setMax(100);
-        slider.setBlockIncrement(1);
-        slider.valueProperty().setValue(defaultValue * 100);
-        textField.setText(Integer.toString((int)(defaultValue * 100)));
+    private void initializeSliderAndTextField(Slider slider, TextField textField, int defaultValue, int min, int max, int stepSize) {
+        slider.setMin(min);
+        slider.setMax(max);
+        slider.setBlockIncrement(stepSize);
+        slider.valueProperty().setValue(defaultValue);
+        textField.setText(Integer.toString(defaultValue));
         slider.valueProperty().addListener((observable, oldValue, newValue) -> {
             textField.setText(String.valueOf((int)(slider.getValue())));
         });
 
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.matches("\\d*")) {
+
                 double value;
                 if (newValue.length() == 0) {
-                    value = 0;
+                    value = min;
                     textField.setText("0");
                 }
 
                 else value = Integer.parseInt(newValue);
-                if (value >= 0 && value <= 100) {
+                if (value >= min && value <= max) {
                     slider.valueProperty().setValue(value);
                 }
                 else textField.setText(oldValue);
+
             } else {
                 textField.setText(oldValue);
             }
