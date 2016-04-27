@@ -56,8 +56,8 @@ public class GeoLocation {
     @Override
     public String toString() {
         return "GeoLocation{" +
-                "latitude=" + latitude +
-                ", longitude=" + longitude +
-                '}';
+                "\n\tlatitude\t" + latitude +
+                "\n\tlongitude\t" + longitude +
+                "\n}";
     }
 }

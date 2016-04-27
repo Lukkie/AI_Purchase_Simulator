@@ -38,8 +38,8 @@ public class DecisionMaker {
 
         double pp = - product.getPPD() * agentProfile.getSP();
 
-        if(quality<0) quality = 100 - quality;
-        if(pp<0) pp = 100 - pp;
+        if(quality<0) quality = 1 - quality;
+        if(pp<0) pp = 1 - pp;
 
         //first change WB based on previous purchases
         agent.changeWB();
@@ -48,8 +48,8 @@ public class DecisionMaker {
         RNG rng = RNG.getInstance();
         rng.initGaussian(2,0);
         double rndDouble = rng.nextGaussian();
-
-        return (changeToBuy / 100) > rndDouble;
+        System.out.println("ChangeToBuy: "+changeToBuy+"\tRandom: "+rndDouble);
+        return (changeToBuy) > rndDouble;
     }
 
 
@@ -61,13 +61,18 @@ public class DecisionMaker {
 
         double chanceCP = (agentProfile.getSP() + agentProfile.getGPI() + agentProfile.getLocationFlexibility() + agentProfile.getSusceptibilityCollectionPoint())/4;
 
-        double rnd = RNG.getInstance().getDouble(0, 100);
+        double rnd = RNG.getInstance().getDouble(0, 1);
 
         if(chanceCP>rnd)  return true; // delivery to home is selected
 
         // if susceptible for CP -> choose CP
-        if(agentProfile.getSusceptibilityCollectionPoint()<RNG.getInstance().getDouble(0, 100)){
+        if(agentProfile.getSusceptibilityCollectionPoint()<RNG.getInstance().getDouble(0, 1)){
+            System.out.println("\tAgent is susceptible for CP");
             cp = agentProfile.getRecommendedCP();
+            System.out.println("\tRecommended CP: "+cp);
+            if(cp==null){
+                cp = CollectionPoint.getRandomClosestCP(agent.getLocation());
+            }
         }
         // else choose closest CP
         else{
@@ -81,13 +86,14 @@ public class DecisionMaker {
 
 
     public void numberOfDays(int preferedNumberOfDate){
-        double chanceNotToday = ((100-agentProfile.getNeedRecognition()) + agentProfile.getSP() + agentProfile.getGPI())/3;
+        System.out.println("Prefered Number of days: "+preferedNumberOfDate);
+        double chanceNotToday = ((1-agentProfile.getNeedRecognition()) + agentProfile.getSP() + agentProfile.getGPI())/3;
 
         // not today has been choosen
-        if(chanceNotToday>RNG.getInstance().getDouble(0,100)){
+        if(chanceNotToday>RNG.getInstance().getDouble(0,1)){
             // first check preferredDate
             if(preferedNumberOfDate<=MAX_WAIT_TIME_IN_DAYS && preferedNumberOfDate>=0){
-                if(agentProfile.getSusceptibilityCollectionPoint()<RNG.getInstance().getDouble(0, 100)){
+                if(agentProfile.getSusceptibilityCollectionPoint()<RNG.getInstance().getDouble(0, 1)){
                     beginNumberOfDays =  preferedNumberOfDate;
                     endNumberOfDays = preferedNumberOfDate;
                     return;
@@ -95,14 +101,16 @@ public class DecisionMaker {
             }
             // [0 ......... MAX_WAIT_TIME_IN_DAYS]
             double moved = ((agentProfile.getSP() + agentProfile.getGPI())/2 - agentProfile.getNeedRecognition());
-            int days = (int) ((moved*50)/100) * MAX_WAIT_TIME_IN_DAYS;
-
-            beginNumberOfDays = RNG.getInstance().getInt(0,days);
-            endNumberOfDays = RNG.getInstance().getInt(days,MAX_WAIT_TIME_IN_DAYS);
-            return;
+            int days = (int)  (MAX_WAIT_TIME_IN_DAYS/2)+ (int) (moved* MAX_WAIT_TIME_IN_DAYS/2);
+            System.out.println("number of days : "+days);
+            if(days>0){
+                beginNumberOfDays = RNG.getInstance().getInt(0,days);
+                endNumberOfDays = RNG.getInstance().getInt(days,MAX_WAIT_TIME_IN_DAYS);
+            }else{
+                beginNumberOfDays = 0;
+                endNumberOfDays = 0;
+            }
         }
-        beginNumberOfDays = 0;
-        endNumberOfDays = 0;
     }
 
     public CollectionPoint getCP(){
