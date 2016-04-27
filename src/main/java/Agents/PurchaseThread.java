@@ -66,7 +66,7 @@ class PurchaseThread {
         Agent influencedAgent = EntityPool.getRandomAgent(this.agent);
         isInfluenced = influencedAgent.influenceBuyBehaviour(agent,choosenCP);
         System.out.println("Is other agent influenced: "+isInfluenced);
-        if(isInfluenced) System.out.println("\t\t\t\t\t\t\t\t\t\t!!!!!!!!!!!!!! Is other agent influenced: "+isInfluenced);
+        if(isInfluenced) System.out.println("\t\tIs other agent influenced: "+isInfluenced);
         agent.setLastPurchaseDate(today);
         Tools.Logger.writeDelivery(agent,product,cp,today, earliest,latest,beginNumOfDays,endNumOfDays,isHomeDelivery,isInfluenced,recommendedDate,agent.getProfile().getRecommendedCP());
         Date lastDate = Tools.DateUtil.addDays(today,endNumOfDays);
