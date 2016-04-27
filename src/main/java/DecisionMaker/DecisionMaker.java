@@ -44,7 +44,7 @@ public class DecisionMaker {
 
         //first change WB based on previous purchases
         agent.changeWB();
-        double changeToBuy = (GPIN + quality + pp + agentProfile.getWB() + agent.getReputationShop())/5;
+        double changeToBuy = (GPIN + quality + pp + agentProfile.getWB() + agentProfile.getShopReputation())/5;
 
         RNG rng = RNG.getInstance();
         rng.initGaussian(2,0);
@@ -59,7 +59,11 @@ public class DecisionMaker {
                      if(false) getCollectionPoint()
      */
     public boolean deliveryToHome() throws Exception {
-
+        if(this.agentProfile.isAlwaysAtHome()){
+            if(RNG.getInstance().getInt(0,100)>99){
+                return true;
+            }
+        }
         double chanceCP = (agentProfile.getSP() + agentProfile.getGPI() + agentProfile.getLocationFlexibility() + agentProfile.getSusceptibility())/4;
 
         double rnd = RNG.getInstance().getDouble(0, 1);
