@@ -129,7 +129,14 @@ public class AgentProfile {
                 ", locationFlexibility=" + locationFlexibility +
                 ", susceptibilityCollectionPoint=" + susceptibilityCollectionPoint +
                 ", CollectionPointRecommendationFactor=" + CollectionPointRecommendationFactor +
+                ", alwaysAtHome=" + alwaysAtHome +
+                ", recommendedCP=" + recommendedCP +
+                ", recommendedDate=" + recommendedDate +
                 '}';
+    }
+
+    public boolean isAlwaysAtHome() {
+        return alwaysAtHome;
     }
 
     public void setRecommendedCP(CollectionPoint recommendedCP) {

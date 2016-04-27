@@ -26,4 +26,20 @@ public class ShopProfile {
     public static double getEA() {
         return environmentalAdvertisement;
     }
+
+    public static void setGreenPerceivedRisk(double greenPerceivedRisk) {
+        ShopProfile.greenPerceivedRisk = greenPerceivedRisk;
+    }
+
+    public static void setGreenPerceivedTrust(double greenPerceivedTrust) {
+        ShopProfile.greenPerceivedTrust = greenPerceivedTrust;
+    }
+
+    public static void setGreenBrandImage(double greenBrandImage) {
+        ShopProfile.greenBrandImage = greenBrandImage;
+    }
+
+    public static void setEnvironmentalAdvertisement(double environmentalAdvertisement) {
+        ShopProfile.environmentalAdvertisement = environmentalAdvertisement;
+    }
 }

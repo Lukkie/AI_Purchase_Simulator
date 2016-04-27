@@ -38,18 +38,18 @@
                         <Label text="Self perception" />
                         <Label text="Price quality perception" GridPane.rowIndex="1" />
                         <Label text="Green purchase intention" GridPane.rowIndex="2" />
-                        <Slider GridPane.columnIndex="1" />
-                        <Slider GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Slider GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <TextField GridPane.columnIndex="2" />
-                        <TextField GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                        <TextField GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                        <Slider GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Slider GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <Slider GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                        <Slider GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                        <Slider GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                        <Slider GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                        <Slider fx:id="agentSelfPerceptionSlider" GridPane.columnIndex="1" />
+                        <Slider fx:id="agentPriceQualityPerceptionSlider" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Slider fx:id="agentGreenPurchaseIntentionSlider" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="agentSelfPerceptionTextField" GridPane.columnIndex="2" />
+                        <TextField fx:id="agentPriceQualityPerceptionTextField" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <TextField fx:id="agentGreenPurchaseIntentionTextField" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <Slider fx:id="agentNeedRecognitionSlider" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Slider fx:id="agentWTBSlider" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Slider fx:id="agentLocationFlexibilitySlider" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Slider fx:id="agentSusceptibilityCPSlider" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <Slider fx:id="agentCPRecommendationSlider" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <Slider fx:id="agentPercentageAtHomeSlider" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                         <Slider GridPane.columnIndex="1" GridPane.rowIndex="9" />
                         <Slider GridPane.columnIndex="1" GridPane.rowIndex="10" />
                         <Label text="Need recognition" GridPane.rowIndex="3" />
@@ -60,12 +60,12 @@
                         <Label text="Percentage always at home" GridPane.rowIndex="8" />
                         <Label text="Label" GridPane.rowIndex="9" />
                         <Label text="Label" GridPane.rowIndex="10" />
-                        <TextField GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                        <TextField GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                        <TextField GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                        <TextField GridPane.columnIndex="2" GridPane.rowIndex="6" />
-                        <TextField GridPane.columnIndex="2" GridPane.rowIndex="7" />
-                        <TextField GridPane.columnIndex="2" GridPane.rowIndex="8" />
+                        <TextField fx:id="agentNeedRecognitionTextField" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                        <TextField fx:id="agentWTBTextField" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                        <TextField fx:id="agentLocationFlexibilityTextField" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                        <TextField fx:id="agentSusceptibilityCPTextField" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                        <TextField fx:id="agentCPRecommendationTextField" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+                        <TextField fx:id="agentPercentageAtHomeTextField" GridPane.columnIndex="2" GridPane.rowIndex="8" />
                         <TextField GridPane.columnIndex="2" GridPane.rowIndex="9" />
                         <TextField GridPane.columnIndex="2" GridPane.rowIndex="10" />
                      </children>
@@ -79,9 +79,9 @@
                <children>
                   <GridPane hgap="10.0" layoutX="65.0" layoutY="146.0" vgap="10.0">
                      <children>
-                        <Label text="Label" />
-                        <Label text="Label" GridPane.rowIndex="1" />
-                        <Label text="Label" GridPane.rowIndex="2" />
+                        <Label text="Green perceived value" />
+                        <Label text="Need recognition" GridPane.rowIndex="1" />
+                        <Label text="Mean price" GridPane.rowIndex="2" />
                         <Slider GridPane.columnIndex="1" />
                         <Slider GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Slider GridPane.columnIndex="1" GridPane.rowIndex="2" />
@@ -92,8 +92,8 @@
                         <Slider GridPane.columnIndex="1" GridPane.rowIndex="4" />
                         <Slider GridPane.columnIndex="1" GridPane.rowIndex="5" />
                         <Slider GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                        <Label text="Label" GridPane.rowIndex="3" />
-                        <Label text="Label" GridPane.rowIndex="4" />
+                        <Label text="Price standard deviation" GridPane.rowIndex="3" />
+                        <Label text="Product availability" GridPane.rowIndex="4" />
                         <Label text="Label" GridPane.rowIndex="5" />
                         <Label text="Label" GridPane.rowIndex="6" />
                         <TextField GridPane.columnIndex="2" GridPane.rowIndex="3" />
@@ -102,8 +102,8 @@
                         <TextField GridPane.columnIndex="2" GridPane.rowIndex="6" />
                      </children>
                      <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="500.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="366.0" minWidth="10.0" prefWidth="261.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="495.0" minWidth="10.0" prefWidth="339.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
                      </columnConstraints>
                      <rowConstraints>
@@ -174,53 +174,8 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <GridPane hgap="10.0" layoutX="65.0" layoutY="75.0" vgap="10.0">
-                     <children>
-                        <Label text="Label" />
-                        <Label text="Label" GridPane.rowIndex="1" />
-                        <Label text="Label" GridPane.rowIndex="2" />
-                        <Slider GridPane.columnIndex="1" />
-                        <Slider GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Slider GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <TextField GridPane.columnIndex="2" />
-                        <TextField GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                        <TextField GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                        <Slider GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Slider GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <Slider GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                        <Slider GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                        <Slider GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                        <Slider GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                        <Label text="Label" GridPane.rowIndex="3" />
-                        <Label text="Label" GridPane.rowIndex="4" />
-                        <Label text="Label" GridPane.rowIndex="5" />
-                        <Label text="Label" GridPane.rowIndex="6" />
-                        <Label text="Label" GridPane.rowIndex="7" />
-                        <Label text="Label" GridPane.rowIndex="8" />
-                        <TextField GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                        <TextField GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                        <TextField GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                        <TextField GridPane.columnIndex="2" GridPane.rowIndex="6" />
-                        <TextField GridPane.columnIndex="2" GridPane.rowIndex="7" />
-                        <TextField GridPane.columnIndex="2" GridPane.rowIndex="8" />
-                     </children>
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="500.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                  </GridPane>
+                  <TextField layoutX="307.0" layoutY="265.0" />
+                  <Label layoutX="306.0" layoutY="230.0" text="Number of collection points:" />
                </children>
             </AnchorPane>
         </content>
@@ -229,7 +184,7 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="startConfigButton" layoutX="353.0" layoutY="265.0" mnemonicParsing="false" text="StartConfig" />
+                  <Button fx:id="startConfigButton" layoutX="338.0" layoutY="265.0" mnemonicParsing="false" text="Start simulation" />
                </children>
             </AnchorPane>
         </content>
