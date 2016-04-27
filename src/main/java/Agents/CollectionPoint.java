@@ -37,7 +37,9 @@ public class CollectionPoint {
         }
         int cnt = CPs.size();
         int index = RNG.getInstance().getInt(0, cnt);
-        return CPs.get(index);
+        CollectionPoint cp = CPs.get(index);
+        System.out.println("Random collection Point selected: "+cp);
+        return cp;
     }
 
     public GeoLocation getLocation() {

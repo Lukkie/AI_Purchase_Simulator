@@ -45,15 +45,20 @@ public class Agent {
 
     boolean influenceBuyBehaviour(Agent agent, CollectionPoint choosenCP) {
         double dist = this.location.distance(agent.getLocation());
-
+        System.out.println("Distance between agents: "+dist);
         // to far
         if(dist >= GeoLocation.MAX_DIST_TO_BE_INFLUENCED_IN_KM) return false;
         // not influenced
-        if(this.profile.getSusceptibilityCollectionPoint()> RNG.getInstance().getDouble(0, 100)) return false;
+        if(this.profile.getSusceptibilityCollectionPoint()> RNG.getInstance().getDouble(0, 1)){
+            System.out.println("But not influenced");
+            return false;
+        }
 
         // adjust willingnessToBuy and recommended CP if not null
         double wb = this.profile.getWB();
-        this.profile.setWB(wb + (100-wb)*(100-dist*GeoLocation.MAX_DIST_TO_BE_INFLUENCED_IN_KM)/100);
+        double newWB = wb + (1-wb)*(100-dist*GeoLocation.MAX_DIST_TO_BE_INFLUENCED_IN_KM);
+        this.profile.setWB(newWB);
+        System.out.println("WB changed from "+wb+" to "+newWB);
 
         if(choosenCP!=null) this.profile.setRecommendedCP(choosenCP);
 
@@ -66,7 +71,7 @@ public class Agent {
 
         if(diff>MAX_NUMBER_NO_BUY){
             double currentWB = this.profile.getWB();
-            double max = currentWB*RNG.getInstance().getDouble(60,90);
+            double max = currentWB*RNG.getInstance().getDouble(0.6,0.9);
             double newWB = currentWB - RNG.getInstance().getDouble(0,max);
             this.profile.setWB(newWB);
             return;

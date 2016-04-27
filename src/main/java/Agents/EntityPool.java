@@ -17,16 +17,22 @@ public class EntityPool {
         agents = agentList;
     }
 
-    public static void setProducts(ArrayList<ProductProfile> productList) {
+    static void setProducts(ArrayList<ProductProfile> productList) {
         products = productList;
     }
 
-    public static Agent getRandomAgent(){
-        return agents.get(RNG.getInstance().getInt(0,agents.size()));
+    static Agent getRandomAgent(Agent me){
+        if(me==null) return agents.get(RNG.getInstance().getInt(0, agents.size()));
+        Agent rndAgent;
+        do {
+             rndAgent = agents.get(RNG.getInstance().getInt(0, agents.size()));
+        }while(rndAgent.equals(me));
+
+        return rndAgent;
     }
 
 
-    public static ProductProfile getRandomProduct(){
+    static ProductProfile getRandomProduct(){
         return products.get(RNG.getInstance().getInt(0,products.size()));
     }
 }

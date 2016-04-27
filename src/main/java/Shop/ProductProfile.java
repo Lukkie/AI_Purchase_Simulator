@@ -40,10 +40,10 @@ public class ProductProfile {
 
     @Override
     public String toString() {
-        String s = "Product:\n";
-        s += "\tGPV: " + greenPerceivedValue +"\n";
-        s += "\tNeed Recognition: " + needRecognition +"\n";
-        s += "\tPrice: " + price;
+        String s = "\nProduct{\n";
+        s += "\tGPV\t\t\t\t\t" + greenPerceivedValue +"\n";
+        s += "\tNeed Recognition\t" + needRecognition +"\n";
+        s += "\tPrice\t\t\t\t" + price+"\n}";
         return s;
     }
 }

@@ -37,20 +37,24 @@ public class PurchaseThreadPool implements Runnable{
                 ProductProfile product = EntityPool.getRandomProduct();
                 // if prev agent influenced another agent, the other agent has a higher chance of buying
                 if(influencedAgent==null){
-                    agent = EntityPool.getRandomAgent();
+                    agent = EntityPool.getRandomAgent(null);
                 }else {
                     if (RNG.getInstance().getInt(0, 100) < CHANCE_INFLUENCED_AGENT_WILL_SHOP) {
                         // the agent is willing to buy online
+                        System.out.println("Influenced Agent willing to buy!!");
                         agent = influencedAgent;
                     } else {
                         // otherwise choose random agent
-                        agent = EntityPool.getRandomAgent();
+                        agent = EntityPool.getRandomAgent(null);
                     }
                 }
                 System.out.println("\t--------------- PurchaseThread started ---------------");
+                System.out.println("\t "+agent);
+                System.out.println("\t "+product);
                 influencedAgent = new PurchaseThread(agent, product, prevAgent, today).start();
                 System.out.println("\t--------------- PurchaseThread ended ---------------");
                 prevAgent = agent;
+                Thread.sleep(1000);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -69,5 +73,6 @@ public class PurchaseThreadPool implements Runnable{
             // change chance of date with next increment
             dateChangeChanceCounter += Tools.RNG.getInstance().getDouble(0,10);
         }
+        System.out.println("Current day: "+today.getDay());
     }
 }

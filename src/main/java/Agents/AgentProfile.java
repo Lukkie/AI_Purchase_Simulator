@@ -121,15 +121,22 @@ public class AgentProfile {
     @Override
     public String toString() {
         return "AgentProfile{" +
-                "selfPerception=" + selfPerception +
-                ", priceQualityPerception=" + priceQualityPerception +
-                ", greenPurchaseIntention=" + greenPurchaseIntention +
-                ", needRecognition=" + needRecognition +
-                ", willingnessToBuy=" + willingnessToBuy +
-                ", locationFlexibility=" + locationFlexibility +
-                ", susceptibilityCollectionPoint=" + susceptibilityCollectionPoint +
-                ", CollectionPointRecommendationFactor=" + CollectionPointRecommendationFactor +
-                '}';
+                "\n\tselfPerception \t\t\t\t\t\t" + selfPerception +
+                "\n" +
+                "\tpriceQualityPerception\t\t\t\t" + priceQualityPerception +
+                "\n" +
+                "\tgreenPurchaseIntention\t\t\t\t" + greenPurchaseIntention +
+                "\n" +
+                "\tneedRecognition\t\t\t\t\t\t" + needRecognition +
+                "\n" +
+                "\twillingnessToBuy\t\t\t\t\t" + willingnessToBuy +
+                "\n" +
+                "\tlocationFlexibility\t\t\t\t\t" + locationFlexibility +
+                "\n" +
+                "\tsusceptibilityCollectionPoint\t\t"+ susceptibilityCollectionPoint +
+                "\n" +
+                "\tCollectionPointRecommendationFactor\t" + CollectionPointRecommendationFactor +
+                "\n}\n";
     }
 
     public void setRecommendedCP(CollectionPoint recommendedCP) {

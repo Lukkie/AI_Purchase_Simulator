@@ -15,6 +15,8 @@ import javafx.scene.control.Tab;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
+import java.util.ArrayList;
+
 /**
  * Created by Lukas on 19-Apr-16.
  */
@@ -45,9 +47,12 @@ public class GUIController {
                 }
 
                 CollectionPointGenerator cpg = new CollectionPointGenerator();
-                for (CollectionPoint cp: cpg.generateCollectionPoints(25)) { // 25 aanpassen door shizzle in GUI
+                ArrayList<CollectionPoint> cps = cpg.generateCollectionPoints(25);
+                for (CollectionPoint cp: cps) { // 25 aanpassen door shizzle in GUI
                     System.out.println(cp.toString());
                 }
+                CollectionPoint.pushList(cps);
+
 
                 PurchaseThreadPool pool = new PurchaseThreadPool(ag.generateAgents(), pg.generateProducts());
                 pool.run();
