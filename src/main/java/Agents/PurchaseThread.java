@@ -69,6 +69,8 @@ class PurchaseThread {
         if(isInfluenced) System.out.println("\t\t\t\t\t\t\t\t\t\t!!!!!!!!!!!!!! Is other agent influenced: "+isInfluenced);
         agent.setLastPurchaseDate(today);
         Tools.Logger.writeDelivery(agent,product,cp,today, earliest,latest,beginNumOfDays,endNumOfDays,isHomeDelivery,isInfluenced,recommendedDate,agent.getProfile().getRecommendedCP());
+        Date lastDate = Tools.DateUtil.addDays(today,endNumOfDays);
+        PurchaseThreadPool.addDelivery(this.agent, lastDate);
         return (isInfluenced) ? influencedAgent : null;
     }
 }

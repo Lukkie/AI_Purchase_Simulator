@@ -163,4 +163,12 @@ public class AgentProfile {
     public void setReputationShop(double reputationShop) {
         this.reputationShop = reputationShop;
     }
+
+    public double getShopReputation() {
+        return shopReputation;
+    }
+
+    public void setShopReputation(double shopReputation) {
+        this.shopReputation = shopReputation;
+    }
 }

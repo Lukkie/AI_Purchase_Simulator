@@ -9,6 +9,7 @@ import java.util.Date;
  * This is an agent who will order some products
  * And based on the profile of the product and shop and his own profile
  * the agent will make a choice on how and when the delivery will proceed
+ *
  */
 public class Agent {
     private static final int MAX_NUMBER_NO_BUY = 100;
@@ -49,7 +50,7 @@ public class Agent {
         // to far
         if(dist >= GeoLocation.MAX_DIST_TO_BE_INFLUENCED_IN_KM) return false;
         // not influenced
-        if(this.profile.getSusceptibilityCollectionPoint()> RNG.getInstance().getDouble(0, 1)){
+        if(this.profile.getSusceptibility()> RNG.getInstance().getDouble(0, 1)){
             System.out.println("But not influenced");
             return false;
         }
@@ -80,5 +81,31 @@ public class Agent {
 
     void setLastPurchaseDate(Date lastPurchaseDate) {
         this.lastTimeBoughtSomething = lastPurchaseDate;
+    }
+
+
+    void wordOfMouth() {
+        int num = RNG.getInstance().getInt(0,5);
+        for(int i=0; i<num;i++){
+            Agent agent = EntityPool.getRandomAgent(this);
+            agent.receivedWordOfMouth(RNG.getInstance().getInt(-1,1));
+        }
+    }
+
+    private void receivedWordOfMouth(int shopReputationChangeFactor) {
+        if(this.profile.getSusceptibility()> RNG.getInstance().getDouble(0, 1)){
+            System.out.println("But not influenced");
+            return;
+        }
+        double currentShopReputation = this.profile.getShopReputation();
+        double newCurrentShopReputation;
+        if(shopReputationChangeFactor>=0){
+            double maxChange = (1- currentShopReputation);
+            newCurrentShopReputation = currentShopReputation + maxChange*shopReputationChangeFactor;
+        }else{
+            double maxChange = currentShopReputation;
+            newCurrentShopReputation = currentShopReputation - maxChange*shopReputationChangeFactor;
+        }
+        this.profile.setShopReputation(newCurrentShopReputation);
     }
 }
