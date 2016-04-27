@@ -21,6 +21,7 @@ public class AgentGenerator {
     private double locationFlexibilityFactor = 0.5;
     private double susceptibilityCollectionPointFactor = 0.5;
     private double collectionPointRecommendationFactorFactor = 0.5;
+    private double atHomeFactor = 0.1;
 
     private final double stddev = 0.2;
 
@@ -41,6 +42,9 @@ public class AgentGenerator {
             ap.setLocationFlexibility(getValue(locationFlexibilityFactor, stddev, rng));
             ap.setSusceptibilityCollectionPoint(getValue(susceptibilityCollectionPointFactor, stddev, rng));
             ap.setCollectionPointRecommendationFactor(getValue(collectionPointRecommendationFactorFactor, stddev, rng));
+            if (rng.nextDouble() <= atHomeFactor) ap.setAlwaysAtHome(true);
+            else ap.setAlwaysAtHome(false);
+
             agent.setProfile(ap);
 
 

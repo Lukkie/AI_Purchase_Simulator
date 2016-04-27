@@ -23,6 +23,8 @@ public class AgentProfile {
     private double susceptibilityCollectionPoint;
     private double CollectionPointRecommendationFactor;
 
+    private boolean alwaysAtHome; // true if delivery always at home
+
     private CollectionPoint recommendedCP; // recommendedCP recommended by someone close
     private Date recommendedDate;
 
@@ -50,6 +52,10 @@ public class AgentProfile {
 
     public void setGreenPurchaseIntention(double greenPurchaseIntention) {
         this.greenPurchaseIntention = greenPurchaseIntention;
+    }
+
+    public void setAlwaysAtHome(boolean alwaysAtHome) {
+        this.alwaysAtHome = alwaysAtHome;
     }
 
     public double getNeedRecognition() {
