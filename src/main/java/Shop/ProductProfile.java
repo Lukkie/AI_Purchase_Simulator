@@ -10,11 +10,13 @@ public class ProductProfile {
     double needRecognition;
     double price;
     double perceivedPriceDifference;
+    private int ID = RNG.getInstance().nextInt(64486465);
 
-
+    public ProductProfile(){
+        perceivedPriceDifference = (0.5-RNG.getInstance().nextDouble())*1.5; // tussen -0.75 en 0.75
+    }
 
     public double getPerceivedPrice () {
-        perceivedPriceDifference = (0.5-RNG.getInstance().nextDouble())*1.5; // tussen -0.75 en 0.75
         return (1 - perceivedPriceDifference) * price;
     }
 
@@ -45,5 +47,9 @@ public class ProductProfile {
         s += "\tNeed Recognition\t" + needRecognition +"\n";
         s += "\tPrice\t\t\t\t" + price+"\n}";
         return s;
+    }
+
+    public int getID() {
+        return ID;
     }
 }

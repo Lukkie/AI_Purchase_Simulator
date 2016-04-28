@@ -10,16 +10,16 @@ import java.util.Date;
  *
  */
 class PurchaseThread {
-    private final Agent prevAgent;
+    private boolean influencedByPrevAgent;
     private Agent agent;
     private ProductProfile product;
     private CollectionPoint cp;
     private Date today;
 
-    PurchaseThread(Agent agent, ProductProfile product, Agent prevAgent, Date today) {
+    PurchaseThread(Agent agent, ProductProfile product, boolean influencedByPrevAgent, Date today) {
         this.agent = agent;
         this.product = product;
-        this.prevAgent = prevAgent;
+        this.influencedByPrevAgent = influencedByPrevAgent;
         this.today = (Date) today.clone();
     }
 
@@ -33,7 +33,7 @@ class PurchaseThread {
             System.out.println("\t\t Will buy");
         }
 
-        boolean isHomeDelivery = decisionMaker.deliveryToHome();
+        boolean isHomeDelivery = decisionMaker.deliveryToHome(this.influencedByPrevAgent);
         if(isHomeDelivery) System.out.println("\t\t HOME delivery");
         else System.out.println("\t\t CP delivery");
 
@@ -54,23 +54,20 @@ class PurchaseThread {
         Date latest = Tools.DateUtil.addDays(today,endNumOfDays);
 
         if(!isHomeDelivery) cp = decisionMaker.getCP();
-        boolean isInfluenced;
-        // influence other agents
-        if(prevAgent==null) isInfluenced =  false;
-        CollectionPoint choosenCP;
-        if(!isHomeDelivery && cp.getLocation().equals(agent.getLocation())){
-            choosenCP=null;
-        }else{
-            choosenCP = cp;
-        }
+
+        // influence random other agent
         Agent influencedAgent = EntityPool.getRandomAgent(this.agent);
-        isInfluenced = influencedAgent.influenceBuyBehaviour(agent,choosenCP);
-        System.out.println("Is other agent influenced: "+isInfluenced);
-        if(isInfluenced) System.out.println("\t\tIs other agent influenced: "+isInfluenced);
+        boolean isOtherAgentInfluenced = false;
+        if(cp!=null) isOtherAgentInfluenced = influencedAgent.influenceBuyBehaviour(agent,cp, Tools.DateUtil.addDays(today,beginNumOfDays));
+        System.out.println("Is other agent influenced: "+isOtherAgentInfluenced);
+
+
         agent.setLastPurchaseDate(today);
-        Tools.Logger.writeDelivery(agent,product,cp,today, earliest,latest,beginNumOfDays,endNumOfDays,isHomeDelivery,isInfluenced,recommendedDate,agent.getProfile().getRecommendedCP());
+        Tools.Logger.writeDelivery(agent,product,cp,today, earliest,latest,beginNumOfDays,endNumOfDays,isHomeDelivery,isOtherAgentInfluenced,recommendedDate,agent.getProfile().getRecommendedCP());
         Date lastDate = Tools.DateUtil.addDays(today,endNumOfDays);
         PurchaseThreadPool.addDelivery(this.agent, lastDate);
-        return (isInfluenced) ? influencedAgent : null;
+
+
+        return (isOtherAgentInfluenced) ? influencedAgent : null;
     }
 }

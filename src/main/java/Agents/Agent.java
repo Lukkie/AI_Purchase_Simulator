@@ -17,6 +17,7 @@ public class Agent {
     private GeoLocation location;
 
     private Date lastTimeBoughtSomething;
+    private int ID = RNG.getInstance().nextInt(64486465);
 
     public AgentProfile getProfile() {
         return profile;
@@ -44,11 +45,13 @@ public class Agent {
         return s;
     }
 
-    boolean influenceBuyBehaviour(Agent agent, CollectionPoint choosenCP) {
+    boolean influenceBuyBehaviour(Agent agent, CollectionPoint choosenCP, Date choosenDate) {
         double dist = this.location.distance(agent.getLocation());
         System.out.println("Distance between agents: "+dist);
         // to far
-        if(dist >= GeoLocation.MAX_DIST_TO_BE_INFLUENCED_IN_KM) return false;
+        //TODO OVERRIDE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // use Geolaction.MAX
+        if(dist >= 100) return false;
         // not influenced
         if(this.profile.getSusceptibility()> RNG.getInstance().getDouble(0, 1)){
             System.out.println("But not influenced");
@@ -57,11 +60,16 @@ public class Agent {
 
         // adjust willingnessToBuy and recommended CP if not null
         double wb = this.profile.getWB();
-        double newWB = wb + (1-wb)*((100-dist*GeoLocation.MAX_DIST_TO_BE_INFLUENCED_IN_KM)/100);
+        //TODO
+        // double newWB = wb + (1-wb)*((100-dist*GeoLocation.MAX_DIST_TO_BE_INFLUENCED_IN_KM)/100);
+        double newWB = wb + (1-wb)*((100-dist*GeoLocation.MAX_DIST_TO_BE_INFLUENCED_IN_KM)/(100*100));
         this.profile.setWB(newWB);
         System.out.println("WB changed from "+wb+" to "+newWB);
 
-        if(choosenCP!=null) this.profile.setRecommendedCP(choosenCP);
+        if(choosenCP!=null){
+            this.profile.setRecommendedCP(choosenCP);
+            this.profile.setRecommendedDate(choosenDate);
+        }
 
         return true;
     }
@@ -72,6 +80,7 @@ public class Agent {
         System.out.println("Previous buy was "+diff+" day(s) ago");
         if(diff>MAX_NUMBER_NO_BUY){
             double currentWB = this.profile.getWB();
+            if(currentWB<0.2) return;
             double max = currentWB*RNG.getInstance().getDouble(0.6,0.9);
             double newWB = currentWB - RNG.getInstance().getDouble(0,max);
             System.out.println("WB is changed from "+currentWB+" to "+newWB);
@@ -107,5 +116,9 @@ public class Agent {
             newCurrentShopReputation = currentShopReputation - maxChange*shopReputationChangeFactor;
         }
         this.profile.setShopReputation(newCurrentShopReputation);
+    }
+
+    public int getID() {
+        return ID;
     }
 }

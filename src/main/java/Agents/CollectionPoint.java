@@ -65,4 +65,8 @@ public class CollectionPoint {
     public void hasBeenChoosenAsDeleveryPoint(){
         count++;
     }
+
+    public String getName() {
+        return name;
+    }
 }

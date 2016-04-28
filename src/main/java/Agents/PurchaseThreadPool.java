@@ -17,6 +17,7 @@ public class PurchaseThreadPool implements Runnable{
 
 
 
+    private boolean influencedByPrevAgent = false;
     private Agent prevAgent = null;
     private Agent influencedAgent = null;
 
@@ -43,10 +44,11 @@ public class PurchaseThreadPool implements Runnable{
                 if(influencedAgent==null){
                     agent = EntityPool.getRandomAgent(null);
                 }else {
-                    if (RNG.getInstance().getInt(0, 100) < CHANCE_INFLUENCED_AGENT_WILL_SHOP) {
+                    if (RNG.chance(CHANCE_INFLUENCED_AGENT_WILL_SHOP,0, 100)) {
                         // the agent is willing to buy online
                         System.out.println("Influenced Agent willing to buy!!");
                         agent = influencedAgent;
+                        this.influencedByPrevAgent= true;
                     } else {
                         // otherwise choose random agent
                         agent = EntityPool.getRandomAgent(null);
@@ -55,24 +57,36 @@ public class PurchaseThreadPool implements Runnable{
                 System.out.println("\t--------------- PurchaseThread started ---------------");
                 System.out.println("\t "+agent);
                 System.out.println("\t "+product);
-                influencedAgent = new PurchaseThread(agent, product, prevAgent, today).start();
+                influencedAgent = new PurchaseThread(agent, product, influencedByPrevAgent, today).start();
                 System.out.println("\t--------------- PurchaseThread ended ---------------");
                 prevAgent = agent;
-                Thread.sleep(1000);
+                //Thread.sleep(1000);
             } catch (Exception e) {
-                e.printStackTrace();
+                try {
+                    e.printStackTrace();
+                    Thread.sleep(100000);
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
+
             }
         }
         System.out.println("---------------------- ThreadPool ended ----------------------");
     }
 
     private void checkDay() {
+        ArrayList<Date> datesToBeRemoved = new ArrayList<>();
         for(Date d: deliveries.keySet()){
             if(Tools.DateUtil.getDifferenceDays(today, d)>=0){
                 for(Agent a: deliveries.get(d)){
                     a.wordOfMouth();
                 }
+                datesToBeRemoved.add(d);
             }
+        }
+
+        for(Date d: datesToBeRemoved){
+            deliveries.remove(d);
         }
     }
 

@@ -76,5 +76,7 @@ public class RNG {
     }
 
 
-
+    public static boolean chance(double val, int min, int max) {
+        return val > RNG.getInstance().getDouble(min,max);
+    }
 }

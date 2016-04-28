@@ -97,7 +97,7 @@ public class GUIController {
 
 
 
-                /*AgentGenerator ag = new AgentGenerator();
+                AgentGenerator ag = new AgentGenerator();
                 for (Agent a: ag.generateAgents()) {
                     System.out.println(a.toString());
                 }
@@ -119,7 +119,7 @@ public class GUIController {
 
 
                 PurchaseThreadPool pool = new PurchaseThreadPool(ag.generateAgents(), pg.generateProducts());
-                pool.run();*/
+                pool.run();
 
             }
         });

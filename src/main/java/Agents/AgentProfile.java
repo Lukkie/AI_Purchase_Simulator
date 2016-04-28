@@ -171,4 +171,8 @@ public class AgentProfile {
     public void setShopReputation(double shopReputation) {
         this.reputationShop = shopReputation;
     }
+
+    public void setRecommendedDate(Date recommendedDate) {
+        this.recommendedDate = recommendedDate;
+    }
 }
