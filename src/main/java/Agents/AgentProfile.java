@@ -83,11 +83,11 @@ public class AgentProfile {
         this.needRecognition = needRecognition;
     }
 
-    public double getSusceptibilityCollectionPoint() {
+    public double getSusceptibility() {
         return susceptibilityCollectionPoint;
     }
 
-    public void setSusceptibilityCollectionPoint(double susceptibilityCollectionPoint) {
+    public void setSusceptibility(double susceptibilityCollectionPoint) {
         this.susceptibilityCollectionPoint = susceptibilityCollectionPoint;
     }
 

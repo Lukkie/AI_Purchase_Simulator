@@ -41,7 +41,7 @@ public class AgentGenerator {
             ap.setNeedRecognition(getValue(needRecognitionFactor, stddev, rng));
             ap.setWillingnessToBuy(getValue(willingnessToBuyFactor, stddev, rng));
             ap.setLocationFlexibility(getValue(locationFlexibilityFactor, stddev, rng));
-            ap.setSusceptibilityCollectionPoint(getValue(susceptibilityCollectionPointFactor, stddev, rng));
+            ap.setSusceptibility(getValue(susceptibilityCollectionPointFactor, stddev, rng));
             ap.setCollectionPointRecommendationFactor(getValue(collectionPointRecommendationFactorFactor, stddev, rng));
             ap.setReputationShop(getValue(shopReputationFactor, stddev, rng));
             if (rng.nextDouble() <= atHomeFactor) ap.setAlwaysAtHome(true);
