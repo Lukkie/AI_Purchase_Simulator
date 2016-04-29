@@ -143,7 +143,7 @@ public class GUIController {
 
 
 
-                PurchaseThreadPool pool = new PurchaseThreadPool(ag.generateAgents(), pg.generateProducts(), cps);
+                PurchaseThreadPool pool = new PurchaseThreadPool(agents, products, cps);
                 pool.run();
 
             }
