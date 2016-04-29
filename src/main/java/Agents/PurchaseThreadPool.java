@@ -40,7 +40,7 @@ public class PurchaseThreadPool implements Runnable{
                 checkDay();
                 Agent agent;
                 ProductProfile product = EntityPool.getRandomProduct();
-                // if prev agent influenced another agent, the other agent has a higher chance of buying
+                // if prev agent influenced another agent, the other (influenced) agent has a higher chance of buying
                 if(influencedAgent==null){
                     agent = EntityPool.getRandomAgent(null);
                 }else {
@@ -60,7 +60,7 @@ public class PurchaseThreadPool implements Runnable{
                 influencedAgent = new PurchaseThread(agent, product, influencedByPrevAgent, today).start();
                 System.out.println("\t--------------- PurchaseThread ended ---------------");
                 prevAgent = agent;
-                //Thread.sleep(1000);
+                Thread.sleep(1000);
             } catch (Exception e) {
                 try {
                     e.printStackTrace();

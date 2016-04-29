@@ -46,7 +46,7 @@ public class Logger {
             arguments.add(""+isHomeDelivery);
             arguments.add(""+isInfluenced);
             if(recommendedDate==null) arguments.add("NONE");
-            else arguments.add(String.valueOf(recommendedDate));
+            else arguments.add(df.format(recommendedDate));
             if(recommendedCP==null) arguments.add("NONE");
             else arguments.add(recommendedCP.getName());
 
@@ -91,7 +91,7 @@ public class Logger {
         writer.append(';');
         writer.append("isHomeDelivery");
         writer.append(';');
-        writer.append("isInfluenced");
+        writer.append("isOtherAgentInfluenced");
         writer.append(';');
         writer.append("recommendedDate");
         writer.append(';');
