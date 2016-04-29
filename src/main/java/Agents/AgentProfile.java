@@ -29,6 +29,8 @@ public class AgentProfile {
     private CollectionPoint recommendedCP; // recommendedCP recommended by someone close
     private Date recommendedDate;
 
+    private boolean acceptedCPOffer = false;
+
 
     /* setters and getters */
     public double getSelfPerception() {
@@ -174,5 +176,13 @@ public class AgentProfile {
 
     public void setRecommendedDate(Date recommendedDate) {
         this.recommendedDate = recommendedDate;
+    }
+
+    public boolean hasAcceptedCPOffer() {
+        return this.acceptedCPOffer;
+    }
+
+    public void setAcceptedCPOffer(boolean acceptedCPOffer) {
+        this.acceptedCPOffer = acceptedCPOffer;
     }
 }

@@ -26,9 +26,10 @@ public class PurchaseThreadPool implements Runnable{
 
     private static HashMap<Date,ArrayList<Agent>> deliveries = new HashMap<>();
 
-    public PurchaseThreadPool(ArrayList<Agent> agentList, ArrayList<ProductProfile> productList) {
+    public PurchaseThreadPool(ArrayList<Agent> agentList, ArrayList<ProductProfile> productList, ArrayList<CollectionPoint> cps) {
         EntityPool.setAgents(agentList);
         EntityPool.setProducts(productList);
+        EntityPool.setCollectionPoints(cps);
     }
 
     @Override
@@ -60,6 +61,7 @@ public class PurchaseThreadPool implements Runnable{
                 influencedAgent = new PurchaseThread(agent, product, influencedByPrevAgent, today).start();
                 System.out.println("\t--------------- PurchaseThread ended ---------------");
                 prevAgent = agent;
+                makeCPOffer();
                 Thread.sleep(1000);
             } catch (Exception e) {
                 try {
@@ -72,6 +74,27 @@ public class PurchaseThreadPool implements Runnable{
             }
         }
         System.out.println("---------------------- ThreadPool ended ----------------------");
+    }
+
+    private void makeCPOffer() {
+        if(RNG.chance(15,0,100)){
+            CollectionPoint cp = EntityPool.getRandomCP();
+            int numOfNeededAcctepedOffers = RNG.getInstance().getInt(10,100);
+            System.out.println("CP ("+(cp.getName())+") has made an offer: "+numOfNeededAcctepedOffers+" with "+cp.getNearbyAgents().size()+" agents nearby.");
+            ArrayList<Agent> acceptedAgents = new ArrayList<>();
+            for(Agent a: cp.getNearbyAgents()){
+                if(a.getProfile().hasAcceptedCPOffer()){
+                    acceptedAgents.add(a);
+                }
+            }
+
+            if(acceptedAgents.size()<numOfNeededAcctepedOffers) return;
+
+            System.out.println("Offer is granted! #agents:"+acceptedAgents.size());
+            for(Agent a: acceptedAgents){
+                a.offerHasBeenGranted(cp);
+            }
+        }
     }
 
     private void checkDay() {

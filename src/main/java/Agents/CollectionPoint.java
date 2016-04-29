@@ -74,4 +74,8 @@ public class CollectionPoint {
     public void addNearbyAgent(Agent agent) {
         nearbyAgents.add(agent);
     }
+
+    public ArrayList<Agent> getNearbyAgents() {
+        return nearbyAgents;
+    }
 }

@@ -34,10 +34,8 @@ public class DecisionMaker {
                 + (12 / 100) * ShopProfile.getGBI() + (32 / 100) * ShopProfile.getEA() + (8 / 100) * product.getGPV();
 
         // be sure the agent is influenced by the quality and the perceived price
-        double quality = 0;
-        double pp = 0;
-
-        quality = Math.abs(product.getPPD());
+        double quality;
+        double pp;
 
         // when ppd<0 -> price < preceivedPrice => so that's good, because we won't cheap products
         if (product.getPPD() < 0) {
@@ -57,7 +55,12 @@ public class DecisionMaker {
         if (product.getPPD() == 0) {
             changeToBuy = (GPIN + agentProfile.getWB() + agentProfile.getShopReputation()) / 3;
         } else {
-            changeToBuy = (GPIN + quality * agentProfile.getPQP() + pp * agentProfile.getSP() + agentProfile.getWB() + agentProfile.getShopReputation())/(3+agentProfile.getPQP()+agentProfile.getSP());
+            changeToBuy = (GPIN + quality * agentProfile.getPQP() + pp * agentProfile.getSP() + agentProfile.getWB() + agentProfile.getShopReputation()) / (3 + agentProfile.getPQP() + agentProfile.getSP());
+        }
+
+        if(agentProfile.hasAcceptedCPOffer()){
+            double max = 1-changeToBuy;
+            changeToBuy += max*RNG.getInstance().getDouble(0.3,1);
         }
 
         if (changeToBuy < 0) changeToBuy = 0;
@@ -73,7 +76,15 @@ public class DecisionMaker {
     @return boolean: if(true) home delivery else collectionPoint
                      if(false) getCollectionPoint()
      */
-    public boolean deliveryToHome(boolean wasInfluenced) throws Exception {
+    public boolean deliveryToHome(boolean wasInfluenced) {
+
+        if(agentProfile.hasAcceptedCPOffer()){
+            cp = agentProfile.getRecommendedCP();
+            cp.hasBeenChoosenAsDeleveryPoint();
+            agentProfile.setAcceptedCPOffer(false);
+            return false;
+        }
+
         if (this.agentProfile.isAlwaysAtHome()) {
             if (RNG.chance(99, 0, 100)) {
                 return true;
@@ -147,5 +158,10 @@ public class DecisionMaker {
 
     public int getEndNumberOfDays() {
         return endNumberOfDays;
+    }
+
+
+    public boolean acceptDiscount() {
+        return !this.deliveryToHome(false);
     }
 }
