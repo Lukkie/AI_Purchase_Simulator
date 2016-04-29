@@ -124,4 +124,9 @@ public class Agent {
     public int getID() {
         return ID;
     }
+
+    public void offerHasBeenGranted(CollectionPoint cp) {
+        this.profile.setAcceptedCPOffer(true);
+        this.profile.setRecommendedCP(cp);
+    }
 }
