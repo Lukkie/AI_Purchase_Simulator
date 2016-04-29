@@ -7,6 +7,7 @@ import Generators.AgentGenerator;
 import Generators.CollectionPointGenerator;
 import Generators.ProductGenerator;
 import Shop.ProductProfile;
+import Shop.ShopProfile;
 import Tools.RNG;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -61,6 +62,7 @@ public class GUIController {
     public TextField productGPVTextField;
     public TextField productNeedRecognitionTextField;
     public TextField productMeanPriceTextField;
+    public TextField productNumberTextField;
 
     @FXML
     public Tab shopTab;
@@ -89,8 +91,14 @@ public class GUIController {
     public void initialize() {
         startConfigButton.setOnMouseClicked(event -> {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
-                // do iets;
+                // do iets als op de knop geklikt wordt;
 
+
+                // shop
+                ShopProfile.setEnvironmentalAdvertisement(getPercentage(shopEATextField));
+                ShopProfile.setGreenBrandImage(getPercentage(shopGBITextField));
+                ShopProfile.setGreenPerceivedRisk(getPercentage(shopGPRTextField));
+                ShopProfile.setGreenPerceivedTrust(getPercentage(shopGPTTextField));
 
 
                 // agents
@@ -114,7 +122,11 @@ public class GUIController {
 
                 // products
                 ProductGenerator pg = new ProductGenerator();
-
+                pg.setAmount(Integer.parseInt(productNumberTextField.getText()));
+                pg.setNeedRecognitionFactor(getPercentage(productNeedRecognitionTextField));
+                pg.setGreenPerceivedValueFactor(getPercentage(productGPVTextField));
+                pg.setPrice(Double.parseDouble(productMeanPriceTextField.getText()));
+                pg.setPriceStdDev(Double.parseDouble(productStddevTextField.getText()));
                 ArrayList<ProductProfile> products = pg.generateProducts();
                 for (ProductProfile p : products) {
                     System.out.println(p.toString());
@@ -122,7 +134,7 @@ public class GUIController {
 
                 CollectionPointGenerator cpg = new CollectionPointGenerator();
                 ArrayList<CollectionPoint> cps = cpg.generateCollectionPoints(Integer.parseInt(CPTextField.getText()), agents);
-                for (CollectionPoint cp: cps) { // 25 aanpassen door shizzle in GUI
+                for (CollectionPoint cp: cps) {
                     System.out.println(cp.toString());
                 }
                 CollectionPoint.pushList(cps);
@@ -157,6 +169,7 @@ public class GUIController {
         initializeSliderAndTextField(productStddevSlider, productStddevTextField, 50, 0, 200, 1);
         initializeSliderAndTextField(productMeanPriceSlider, productMeanPriceTextField, 200, 1, 500, 1);
         initializeSliderAndTextField(productNeedRecognitionSlider, productNeedRecognitionTextField, 50, 0, 100, 1);
+        setNotZeroTextField(productNumberTextField, 10);
 
         // Shop
         initializeSliderAndTextField(shopEASlider, shopEATextField, 50, 0, 100, 1);
