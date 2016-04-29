@@ -47,4 +47,24 @@ public class ProductGenerator {
         if (price < 0) price = 0;
         return price;
     }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public void setGreenPerceivedValueFactor(double greenPerceivedValueFactor) {
+        this.greenPerceivedValueFactor = greenPerceivedValueFactor;
+    }
+
+    public void setNeedRecognitionFactor(double needRecognitionFactor) {
+        this.needRecognitionFactor = needRecognitionFactor;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public void setPriceStdDev(double priceStdDev) {
+        this.priceStdDev = priceStdDev;
+    }
 }

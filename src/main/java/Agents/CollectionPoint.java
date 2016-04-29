@@ -12,6 +12,7 @@ public class CollectionPoint {
     private GeoLocation location;
     private String name;
     private int count = 0;
+    private ArrayList<Agent> nearbyAgents = new ArrayList<Agent>();
 
     private static int CHANCE_CLOSEST_CP = 90;
 
@@ -68,5 +69,9 @@ public class CollectionPoint {
 
     public String getName() {
         return name;
+    }
+
+    public void addNearbyAgent(Agent agent) {
+        nearbyAgents.add(agent);
     }
 }

@@ -2,6 +2,7 @@ package Generators;
 
 import Agents.Agent;
 import Agents.AgentProfile;
+import Agents.CollectionPoint;
 import Agents.GeoLocation;
 import Tools.RNG;
 
@@ -104,4 +105,11 @@ public class AgentGenerator {
         this.collectionPointRecommendationFactorFactor = collectionPointRecommendationFactorFactor;
     }
 
+    public void setShopReputationFactor(double shopReputationFactor) {
+        this.shopReputationFactor = shopReputationFactor;
+    }
+
+    public void setAtHomeFactor(double atHomeFactor) {
+        this.atHomeFactor = atHomeFactor;
+    }
 }

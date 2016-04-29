@@ -30,6 +30,8 @@
                         <TextField fx:id="CPTextField" GridPane.columnIndex="1" />
                         <Label text="Number of agents:" GridPane.rowIndex="1" />
                         <TextField fx:id="agentNumberTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="Number of products:" GridPane.rowIndex="2" />
+                        <TextField fx:id="productNumberTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
                   <GridPane alignment="CENTER" hgap="10.0" layoutX="230.0" layoutY="477.0" prefHeight="30.0" prefWidth="340.0" vgap="10.0">

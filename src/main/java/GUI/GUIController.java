@@ -13,10 +13,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Slider;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
@@ -96,19 +93,35 @@ public class GUIController {
 
 
 
-
+                // agents
                 AgentGenerator ag = new AgentGenerator();
-                for (Agent a: ag.generateAgents()) {
+                ag.setAgentAmount(Integer.parseInt(agentNumberTextField.getText()));
+                ag.setSelfPerceptionFactor(getPercentage(agentSelfPerceptionTextField));
+                ag.setPriceQualityPerceptionFactor(getPercentage(agentPriceQualityPerceptionTextField));
+                ag.setGreenPurchaseIntentionFactor(getPercentage(agentGreenPurchaseIntentionTextField));
+                ag.setNeedRecognitionFactor(getPercentage(agentNeedRecognitionTextField));
+                ag.setWillingnessToBuyFactor(getPercentage(agentWTBTextField));
+                ag.setLocationFlexibilityFactor(getPercentage(agentLocationFlexibilityTextField));
+                ag.setSusceptibilityCollectionPointFactor(getPercentage(agentSusceptibilityCPTextField));
+                ag.setCollectionPointRecommendationFactorFactor(getPercentage(agentCPRecommendationTextField));
+                ag.setAtHomeFactor(getPercentage(agentPercentageAtHomeTextField));
+                ag.setShopReputationFactor(getPercentage(agentShopReputationTextField));
+                ArrayList<Agent> agents = ag.generateAgents();
+                for (Agent a: agents) {
                     System.out.println(a.toString());
                 }
 
+
+                // products
                 ProductGenerator pg = new ProductGenerator();
-                for (ProductProfile p : pg.generateProducts()) {
+
+                ArrayList<ProductProfile> products = pg.generateProducts();
+                for (ProductProfile p : products) {
                     System.out.println(p.toString());
                 }
 
                 CollectionPointGenerator cpg = new CollectionPointGenerator();
-                ArrayList<CollectionPoint> cps = cpg.generateCollectionPoints(25);
+                ArrayList<CollectionPoint> cps = cpg.generateCollectionPoints(Integer.parseInt(CPTextField.getText()), agents);
                 for (CollectionPoint cp: cps) { // 25 aanpassen door shizzle in GUI
                     System.out.println(cp.toString());
                 }
@@ -173,6 +186,10 @@ public class GUIController {
                 }
             }
         });
+    }
+
+    private double getPercentage(TextField tf) {
+        return 0.01d * Double.parseDouble(tf.getText());
     }
 
 

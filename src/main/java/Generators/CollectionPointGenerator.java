@@ -1,6 +1,7 @@
 package Generators;
 
 
+import Agents.Agent;
 import Agents.CollectionPoint;
 import Agents.GeoLocation;
 import Tools.RNG;
@@ -18,7 +19,7 @@ import java.util.stream.Stream;
 public class CollectionPointGenerator {
 
 
-    public ArrayList<CollectionPoint> generateCollectionPoints(int amount) {
+    public ArrayList<CollectionPoint> generateCollectionPoints(int amount, ArrayList<Agent> agents) {
         ArrayList<CollectionPoint> collectionPoints = new ArrayList<>();
         RNG rng = RNG.getInstance();
 
@@ -34,6 +35,14 @@ public class CollectionPointGenerator {
                     cp.setName(line);
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+
+
+            for (Agent agent : agents) {
+                if (agent.getLocation().distance(loc) <= 30) {
+                    cp.addNearbyAgent(agent);
+                    System.out.println("Agent "+agent.getID()+" is close to collection point "+cp.getName());
+                }
             }
 
             collectionPoints.add(cp);
