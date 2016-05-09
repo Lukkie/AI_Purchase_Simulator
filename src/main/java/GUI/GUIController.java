@@ -8,22 +8,23 @@ import Generators.CollectionPointGenerator;
 import Generators.ProductGenerator;
 import Shop.ProductProfile;
 import Shop.ShopProfile;
-import Tools.RNG;
-import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
 
+import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Lukas on 19-Apr-16.
  */
 public class GUIController {
+
+    private ArrayList<TextField> textFields = new ArrayList<>();
+    private ArrayList<Integer> values = new ArrayList<>();
+    private HashMap<TextField, Slider> tuples = new HashMap<>();
 
     @FXML
     public Tab agentsTab;
@@ -85,6 +86,10 @@ public class GUIController {
     @FXML
     public Tab simulationTab;
     public Button startConfigButton;
+
+    @FXML
+    public Button saveConfigButton;
+    public Button loadConfigButton;
 
 
     @FXML
@@ -180,6 +185,70 @@ public class GUIController {
 
         // Collection points
         setNotZeroTextField(CPTextField, 25);
+
+        // Config buttons
+        initializeConfigButtons();
+    }
+
+    private void initializeConfigButtons() {
+        saveConfigButton.setOnMouseClicked(event -> {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                try {
+                    FileChooser fileChooser = new FileChooser();
+                    fileChooser.setTitle("Save config");
+                    FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Data files (*.data)", "*.data");
+                    fileChooser.getExtensionFilters().add(extFilter);
+                    File file = fileChooser.showSaveDialog(saveConfigButton.getScene().getWindow());
+                    if (file != null) {
+                        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+                        out.writeObject(values);
+                        out.writeObject(CPTextField.getText());
+                        out.writeObject(agentNumberTextField.getText());
+                        out.writeObject(productNumberTextField.getText());
+                        out.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
+
+        loadConfigButton.setOnMouseClicked(event -> {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                try {
+                    FileChooser fileChooser = new FileChooser();
+                    fileChooser.setTitle("Load config");
+                    FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Data files (*.data)", "*.data");
+                    fileChooser.getExtensionFilters().add(extFilter);
+                    File file = fileChooser.showOpenDialog(loadConfigButton.getScene().getWindow());
+                    if (file != null) {
+                        ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+                        ArrayList<Integer> loadedValues = (ArrayList<Integer>)in.readObject();
+                        for (int i = 0; i < textFields.size(); i++) {
+                            changeValue(i, textFields.get(i), loadedValues.get(i));
+                        }
+                        values = loadedValues;
+
+                        CPTextField.setText((String)in.readObject());
+                        agentNumberTextField.setText((String)in.readObject());
+                        productNumberTextField.setText((String)in.readObject());
+
+                        in.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private void changeValue(int index, TextField tf, Integer newValue) {
+        tf.setText(Integer.toString(newValue));
+        tuples.get(tf).valueProperty().setValue(newValue);
     }
 
     private void setNotZeroTextField(TextField textField, int defaultValue) {
@@ -214,6 +283,7 @@ public class GUIController {
         textField.setText(Integer.toString(defaultValue));
         slider.valueProperty().addListener((observable, oldValue, newValue) -> {
             textField.setText(String.valueOf((int)(slider.getValue())));
+            values.set(textFields.indexOf(textField), (int) slider.getValue());
         });
 
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -223,11 +293,14 @@ public class GUIController {
                 if (newValue.length() == 0) {
                     value = min;
                     textField.setText("0");
+                    values.set(textFields.indexOf(textField), 0);
                 }
 
                 else value = Integer.parseInt(newValue);
                 if (value >= min && value <= max) {
                     slider.valueProperty().setValue(value);
+                    values.set(textFields.indexOf(textField), (int)value);
+
                 }
                 else textField.setText(oldValue);
 
@@ -236,6 +309,9 @@ public class GUIController {
             }
         });
 
+        textFields.add(textField);
+        values.add(defaultValue);
+        tuples.put(textField, slider);
     }
 
 
