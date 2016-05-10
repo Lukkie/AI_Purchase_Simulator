@@ -1,5 +1,6 @@
 package Agents;
 
+import DecisionMaker.DecisionMaker;
 import Shop.ProductProfile;
 import Tools.RNG;
 
@@ -62,7 +63,7 @@ public class PurchaseThreadPool implements Runnable{
                 System.out.println("\t--------------- PurchaseThread ended ---------------");
                 prevAgent = agent;
                 makeCPOffer();
-                Thread.sleep(1000);
+                //Thread.sleep(1000);
             } catch (Exception e) {
                 try {
                     e.printStackTrace();
@@ -77,18 +78,24 @@ public class PurchaseThreadPool implements Runnable{
     }
 
     private void makeCPOffer() {
+        // 15% chance
         if(RNG.chance(15,0,100)){
             CollectionPoint cp = EntityPool.getRandomCP();
-            int numOfNeededAcctepedOffers = RNG.getInstance().getInt(10,100);
+
+            // how many ppl need to accept offer? [1,20[
+            int numOfNeededAcctepedOffers = RNG.getInstance().getInt(1,20);
             System.out.println("CP ("+(cp.getName())+") has made an offer: "+numOfNeededAcctepedOffers+" with "+cp.getNearbyAgents().size()+" agents nearby.");
             ArrayList<Agent> acceptedAgents = new ArrayList<>();
             for(Agent a: cp.getNearbyAgents()){
-                if(a.getProfile().hasAcceptedCPOffer()){
+                if(DecisionMaker.acceptDiscount(a)){
                     acceptedAgents.add(a);
                 }
             }
 
-            if(acceptedAgents.size()<numOfNeededAcctepedOffers) return;
+            if(acceptedAgents.size()<numOfNeededAcctepedOffers){
+                System.out.println("Offer not accepted! #agents:"+acceptedAgents.size());
+                return;
+            }
 
             System.out.println("Offer is granted! #agents:"+acceptedAgents.size());
             for(Agent a: acceptedAgents){
@@ -97,6 +104,10 @@ public class PurchaseThreadPool implements Runnable{
         }
     }
 
+    /**
+     * Spread rumors or advise a shop when your delivery has been received
+     * Word of Mouth
+     */
     private void checkDay() {
         ArrayList<Date> datesToBeRemoved = new ArrayList<>();
         for(Date d: deliveries.keySet()){
@@ -107,7 +118,6 @@ public class PurchaseThreadPool implements Runnable{
                 datesToBeRemoved.add(d);
             }
         }
-
         for(Date d: datesToBeRemoved){
             deliveries.remove(d);
         }

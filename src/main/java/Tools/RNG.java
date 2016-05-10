@@ -57,6 +57,12 @@ public class RNG {
         return ThreadLocalRandom.current().nextDouble(min, max);
     }
 
+    /**
+     *
+     * @param min inclusive
+     * @param max exclusive
+     * @return random int between bounds
+     */
     public synchronized int getInt(int min, int max) {
         return ThreadLocalRandom.current().nextInt(min, max);
     }

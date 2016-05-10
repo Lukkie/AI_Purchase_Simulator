@@ -55,7 +55,14 @@ public class DecisionMaker {
         if (product.getPPD() == 0) {
             changeToBuy = (GPIN + agentProfile.getWB() + agentProfile.getShopReputation()) / 3;
         } else {
-            changeToBuy = (GPIN + quality * agentProfile.getPQP() + pp * agentProfile.getSP() + agentProfile.getWB() + agentProfile.getShopReputation()) / (3 + agentProfile.getPQP() + agentProfile.getSP());
+            /*
+            Mean {GPIN, ServiceAfterPurchase, Availability, WB, ReputationShop}
+            and if PPD is not zero also {Quality, PP}
+             */
+            changeToBuy = (GPIN + (quality * agentProfile.getPQP()) + (pp * agentProfile.getSP())
+                    + agentProfile.getWB() + agentProfile.getShopReputation()
+            + ShopProfile.getService() + product.getAvailability())
+                    / (7);
         }
 
         if(agentProfile.hasAcceptedCPOffer()){
@@ -85,6 +92,9 @@ public class DecisionMaker {
             return false;
         }
 
+        /*
+        If agent is alwaysHome he has a chance of 99% to request home delivery
+         */
         if (this.agentProfile.isAlwaysAtHome()) {
             if (RNG.chance(99, 0, 100)) {
                 return true;
@@ -99,7 +109,7 @@ public class DecisionMaker {
 
         double rnd = RNG.getInstance().getDouble(0, 1);
 
-        if (chanceCP > rnd) return true; // delivery to home is selected
+        if (chanceCP < rnd) return true; // delivery to home is selected
 
         // if susceptible for CP -> choose CP
         if (RNG.chance(agentProfile.getSusceptibility(), 0, 1)) {
@@ -161,7 +171,21 @@ public class DecisionMaker {
     }
 
 
-    public boolean acceptDiscount() {
-        return !this.deliveryToHome(false);
+    public static boolean acceptDiscount(Agent agent) {
+        AgentProfile agentProfile = agent.getProfile();
+
+        if (agentProfile.isAlwaysAtHome()) {
+            if (RNG.chance(99, 0, 100)) {
+                //System.out.println("Offer not accepted because of always home");
+                return false;
+            }
+        }
+        double chanceCP = (agentProfile.getSP() + agentProfile.getGPI() + agentProfile.getLocationFlexibility()) / 3;
+
+        double rnd = RNG.getInstance().getDouble(0, 1);
+
+        if (chanceCP > rnd) return false; // delivery to home is selected
+
+        return true;
     }
 }

@@ -11,6 +11,7 @@ public class ProductProfile {
     double price;
     double perceivedPriceDifference;
     private int ID = RNG.getInstance().nextInt(64486465);
+    private double availability;
 
     public ProductProfile(){
         perceivedPriceDifference = (0.5-RNG.getInstance().nextDouble())*1.5; // tussen -0.75 en 0.75
@@ -38,6 +39,14 @@ public class ProductProfile {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public double getAvailability() {
+        return availability;
+    }
+
+    public void setAvailability(double availability) {
+        this.availability = availability;
     }
 
 
