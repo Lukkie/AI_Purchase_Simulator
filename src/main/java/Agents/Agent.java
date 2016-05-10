@@ -74,6 +74,9 @@ public class Agent {
         return true;
     }
 
+    /**
+     * Change willigness to buy based on last purchase date
+     */
     public void changeWB() {
         if(lastTimeBoughtSomething==null) return;
         int diff = DateUtil.getDifferenceDays(lastTimeBoughtSomething,PurchaseThreadPool.today);
