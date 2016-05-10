@@ -10,6 +10,7 @@ public class ShopProfile {
     private static double greenPerceivedTrust;
     private static double greenBrandImage;
     private static double environmentalAdvertisement;
+    private static double service;
 
     public static double getGPR() {
         return greenPerceivedRisk;
@@ -27,6 +28,10 @@ public class ShopProfile {
         return environmentalAdvertisement;
     }
 
+    public static double getService() {
+        return service;
+    }
+
     public static void setGreenPerceivedRisk(double greenPerceivedRisk) {
         ShopProfile.greenPerceivedRisk = greenPerceivedRisk;
     }
@@ -41,5 +46,10 @@ public class ShopProfile {
 
     public static void setEnvironmentalAdvertisement(double environmentalAdvertisement) {
         ShopProfile.environmentalAdvertisement = environmentalAdvertisement;
+    }
+
+
+    public static void setService(double service) {
+        ShopProfile.service = service;
     }
 }

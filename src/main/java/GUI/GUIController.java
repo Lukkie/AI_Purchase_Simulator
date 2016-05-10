@@ -104,6 +104,7 @@ public class GUIController {
                 ShopProfile.setGreenBrandImage(getPercentage(shopGBITextField));
                 ShopProfile.setGreenPerceivedRisk(getPercentage(shopGPRTextField));
                 ShopProfile.setGreenPerceivedTrust(getPercentage(shopGPTTextField));
+                ShopProfile.setService(getPercentage(shopServiceTextField));
 
 
                 // agents
@@ -130,6 +131,7 @@ public class GUIController {
                 pg.setAmount(Integer.parseInt(productNumberTextField.getText()));
                 pg.setNeedRecognitionFactor(getPercentage(productNeedRecognitionTextField));
                 pg.setGreenPerceivedValueFactor(getPercentage(productGPVTextField));
+                pg.setAvailability(getPercentage(productAvailabilityTextField));
                 pg.setPrice(Double.parseDouble(productMeanPriceTextField.getText()));
                 pg.setPriceStdDev(Double.parseDouble(productStddevTextField.getText()));
                 ArrayList<ProductProfile> products = pg.generateProducts();

@@ -40,6 +40,8 @@ public class ProductProfile {
         this.price = price;
     }
 
+
+
     @Override
     public String toString() {
         String s = "\nProduct{\n";

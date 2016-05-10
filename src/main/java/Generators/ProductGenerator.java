@@ -16,6 +16,7 @@ public class ProductGenerator {
     private double needRecognitionFactor = 0.5;
     private double price = 200;
     private double priceStdDev = 50;
+    private double availability = 0.5;
 
     private final double stddev = 0.2;
 
@@ -67,4 +68,13 @@ public class ProductGenerator {
     public void setPriceStdDev(double priceStdDev) {
         this.priceStdDev = priceStdDev;
     }
+
+    public double getAvailability() {
+        return availability;
+    }
+
+    public void setAvailability(double availability) {
+        this.availability = availability;
+    }
+
 }
