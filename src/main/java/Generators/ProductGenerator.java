@@ -18,17 +18,16 @@ public class ProductGenerator {
     private double priceStdDev = 50;
     private double availability = 0.5;
 
-    private final double stddev = 0.2;
-
-
 
     public ArrayList<ProductProfile> generateProducts() {
         RNG rng = RNG.getInstance();
         ArrayList<ProductProfile> products = new ArrayList<>();
         for (int i = 0; i < amount; i++) {
             ProductProfile product = new ProductProfile();
+            double stddev = 0.2;
             product.setGreenPerceivedValue(getValue(greenPerceivedValueFactor, stddev, rng));
             product.setNeedRecognition(getValue(needRecognitionFactor, stddev, rng));
+            product.setAvailability(getValue(availability, stddev, rng));
             product.setPrice(getPrice(rng));
             products.add(product);
         }
@@ -69,9 +68,6 @@ public class ProductGenerator {
         this.priceStdDev = priceStdDev;
     }
 
-    public double getAvailability() {
-        return availability;
-    }
 
     public void setAvailability(double availability) {
         this.availability = availability;
