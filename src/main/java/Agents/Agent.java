@@ -99,9 +99,10 @@ public class Agent {
     void wordOfMouth() {
         int num = RNG.getInstance().getInt(0,5);
         System.out.println("WordOfMouth num: "+num);
+        double factor = RNG.getInstance().getDouble(-1,1);
         for(int i=0; i<num;i++){
             Agent agent = EntityPool.getRandomAgent(this);
-            agent.receivedWordOfMouth(RNG.getInstance().getDouble(-1,1));
+            agent.receivedWordOfMouth(factor);
         }
     }
 

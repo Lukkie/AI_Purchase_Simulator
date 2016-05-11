@@ -62,7 +62,7 @@ public class DecisionMaker {
             chanceToBuy = (GPIN + (quality * agentProfile.getPQP()) + (pp * agentProfile.getSP())
                     + agentProfile.getWB() + agentProfile.getShopReputation()
             + ShopProfile.getService() + product.getAvailability())
-                    / (7);
+                    / (5 + agentProfile.getPQP() + agentProfile.getSP());
         }
 
         if(agentProfile.hasAcceptedCPOffer()){
