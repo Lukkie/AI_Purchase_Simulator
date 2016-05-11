@@ -218,6 +218,7 @@ public class GUIController {
         fileChooser.setTitle("Choose save location");
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Comma seperated values (*.csv)", "*.csv");
         fileChooser.getExtensionFilters().add(extFilter);
+        fileChooser.setInitialFileName("deliveries.csv");
         File file = fileChooser.showSaveDialog(startConfigButton.getScene().getWindow());
         if (file != null) {
             if (file.exists() && !file.delete()) {
