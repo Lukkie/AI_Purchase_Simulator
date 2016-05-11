@@ -8,6 +8,7 @@ import Generators.CollectionPointGenerator;
 import Generators.ProductGenerator;
 import Shop.ProductProfile;
 import Shop.ShopProfile;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
@@ -21,6 +22,8 @@ import java.util.HashMap;
  * Created by Lukas on 19-Apr-16.
  */
 public class GUIController {
+
+    private PurchaseThreadPool pool = null;
 
     private ArrayList<TextField> textFields = new ArrayList<>();
     private ArrayList<Integer> values = new ArrayList<>();
@@ -94,6 +97,47 @@ public class GUIController {
 
     @FXML
     public void initialize() {
+        setupStartButton();
+
+
+
+        // Agents
+        initializeSliderAndTextField(agentSelfPerceptionSlider, agentSelfPerceptionTextField, 50, 0, 100, 1);
+        initializeSliderAndTextField(agentWTBSlider, agentWTBTextField, 50, 0, 100, 1);
+        initializeSliderAndTextField(agentCPRecommendationSlider, agentCPRecommendationTextField, 50, 0, 100, 1);
+        initializeSliderAndTextField(agentLocationFlexibilitySlider, agentLocationFlexibilityTextField, 50, 0, 100, 1);
+        initializeSliderAndTextField(agentNeedRecognitionSlider, agentNeedRecognitionTextField, 50, 0, 100, 1);
+        initializeSliderAndTextField(agentSusceptibilityCPSlider, agentSusceptibilityCPTextField, 50, 0, 100, 1);
+        initializeSliderAndTextField(agentGreenPurchaseIntentionSlider, agentGreenPurchaseIntentionTextField, 50, 0, 100, 1);
+        initializeSliderAndTextField(agentPriceQualityPerceptionSlider, agentPriceQualityPerceptionTextField, 50, 0, 100, 1);
+        initializeSliderAndTextField(agentPercentageAtHomeSlider, agentPercentageAtHomeTextField, 10, 0, 100, 1);
+        initializeSliderAndTextField(agentShopReputationSlider, agentShopReputationTextField, 50, 0, 100, 1);
+        setNotZeroTextField(agentNumberTextField, 100);
+
+        // Products
+        initializeSliderAndTextField(productAvailabilitySlider, productAvailabilityTextField, 50, 0, 100, 1);
+        initializeSliderAndTextField(productGPVSlider, productGPVTextField, 50, 0, 100, 1);
+        initializeSliderAndTextField(productStddevSlider, productStddevTextField, 50, 0, 200, 1);
+        initializeSliderAndTextField(productMeanPriceSlider, productMeanPriceTextField, 200, 1, 500, 1);
+        initializeSliderAndTextField(productNeedRecognitionSlider, productNeedRecognitionTextField, 50, 0, 100, 1);
+        setNotZeroTextField(productNumberTextField, 10);
+
+        // Shop
+        initializeSliderAndTextField(shopEASlider, shopEATextField, 50, 0, 100, 1);
+        initializeSliderAndTextField(shopGBISlider, shopGBITextField, 50, 0, 100, 1);
+        initializeSliderAndTextField(shopGPRSlider, shopGPRTextField, 50, 0, 100, 1);
+        initializeSliderAndTextField(shopGPTSlider, shopGPTTextField, 50, 0, 100, 1);
+        initializeSliderAndTextField(shopServiceSlider, shopServiceTextField, 50, 0, 100, 1);
+
+        // Collection points
+        setNotZeroTextField(CPTextField, 25);
+
+        // Config buttons
+        initializeConfigButtons();
+    }
+
+    private void setupStartButton() {
+        startConfigButton.setText("Start simulation");
         startConfigButton.setOnMouseClicked(event -> {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
                 // do iets als op de knop geklikt wordt;
@@ -148,48 +192,25 @@ public class GUIController {
 
 
 
+                setupStopButton();
 
+                pool = new PurchaseThreadPool(agents, products, cps);
 
-                PurchaseThreadPool pool = new PurchaseThreadPool(agents, products, cps);
-                pool.run();
+                new Thread(pool).start();
 
             }
         });
+    }
 
-
-        // Agents
-        initializeSliderAndTextField(agentSelfPerceptionSlider, agentSelfPerceptionTextField, 50, 0, 100, 1);
-        initializeSliderAndTextField(agentWTBSlider, agentWTBTextField, 50, 0, 100, 1);
-        initializeSliderAndTextField(agentCPRecommendationSlider, agentCPRecommendationTextField, 50, 0, 100, 1);
-        initializeSliderAndTextField(agentLocationFlexibilitySlider, agentLocationFlexibilityTextField, 50, 0, 100, 1);
-        initializeSliderAndTextField(agentNeedRecognitionSlider, agentNeedRecognitionTextField, 50, 0, 100, 1);
-        initializeSliderAndTextField(agentSusceptibilityCPSlider, agentSusceptibilityCPTextField, 50, 0, 100, 1);
-        initializeSliderAndTextField(agentGreenPurchaseIntentionSlider, agentGreenPurchaseIntentionTextField, 50, 0, 100, 1);
-        initializeSliderAndTextField(agentPriceQualityPerceptionSlider, agentPriceQualityPerceptionTextField, 50, 0, 100, 1);
-        initializeSliderAndTextField(agentPercentageAtHomeSlider, agentPercentageAtHomeTextField, 10, 0, 100, 1);
-        initializeSliderAndTextField(agentShopReputationSlider, agentShopReputationTextField, 50, 0, 100, 1);
-        setNotZeroTextField(agentNumberTextField, 100);
-
-        // Products
-        initializeSliderAndTextField(productAvailabilitySlider, productAvailabilityTextField, 50, 0, 100, 1);
-        initializeSliderAndTextField(productGPVSlider, productGPVTextField, 50, 0, 100, 1);
-        initializeSliderAndTextField(productStddevSlider, productStddevTextField, 50, 0, 200, 1);
-        initializeSliderAndTextField(productMeanPriceSlider, productMeanPriceTextField, 200, 1, 500, 1);
-        initializeSliderAndTextField(productNeedRecognitionSlider, productNeedRecognitionTextField, 50, 0, 100, 1);
-        setNotZeroTextField(productNumberTextField, 10);
-
-        // Shop
-        initializeSliderAndTextField(shopEASlider, shopEATextField, 50, 0, 100, 1);
-        initializeSliderAndTextField(shopGBISlider, shopGBITextField, 50, 0, 100, 1);
-        initializeSliderAndTextField(shopGPRSlider, shopGPRTextField, 50, 0, 100, 1);
-        initializeSliderAndTextField(shopGPTSlider, shopGPTTextField, 50, 0, 100, 1);
-        initializeSliderAndTextField(shopServiceSlider, shopServiceTextField, 50, 0, 100, 1);
-
-        // Collection points
-        setNotZeroTextField(CPTextField, 25);
-
-        // Config buttons
-        initializeConfigButtons();
+    private void setupStopButton() {
+        //startConfigButton.textProperty().setValue("Stop simulation");
+        startConfigButton.setText("Stop simulation");
+        startConfigButton.setOnMouseClicked(event -> {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                pool.stop = true;
+                setupStartButton();
+            }
+        });
     }
 
     private void initializeConfigButtons() {
