@@ -51,31 +51,31 @@ public class DecisionMaker {
         agent.changeWB();
 
 
-        double changeToBuy;
+        double chanceToBuy;
         if (product.getPPD() == 0) {
-            changeToBuy = (GPIN + agentProfile.getWB() + agentProfile.getShopReputation()) / 3;
+            chanceToBuy = (GPIN + agentProfile.getWB() + agentProfile.getShopReputation()) / 3;
         } else {
             /*
             Mean {GPIN, ServiceAfterPurchase, Availability, WB, ReputationShop}
             and if PPD is not zero also {Quality, PP}
              */
-            changeToBuy = (GPIN + (quality * agentProfile.getPQP()) + (pp * agentProfile.getSP())
+            chanceToBuy = (GPIN + (quality * agentProfile.getPQP()) + (pp * agentProfile.getSP())
                     + agentProfile.getWB() + agentProfile.getShopReputation()
             + ShopProfile.getService() + product.getAvailability())
                     / (7);
         }
 
         if(agentProfile.hasAcceptedCPOffer()){
-            double max = 1-changeToBuy;
-            changeToBuy += max*RNG.getInstance().getDouble(0.3,1);
+            double max = 1-chanceToBuy;
+            chanceToBuy += max*RNG.getInstance().getDouble(0.3,1);
         }
 
-        if (changeToBuy < 0) changeToBuy = 0;
+        if (chanceToBuy < 0) chanceToBuy = 0;
 
         RNG rng = RNG.getInstance();
         double rndDouble = rng.getDouble(0, 1);
-        System.out.println("ChangeToBuy: " + changeToBuy + "\tRandom: " + rndDouble);
-        return (changeToBuy) > rndDouble;
+        System.out.println("ChanceToBuy: " + chanceToBuy + "\tRandom: " + rndDouble);
+        return (chanceToBuy) > rndDouble;
     }
 
 
