@@ -8,6 +8,7 @@ import Generators.CollectionPointGenerator;
 import Generators.ProductGenerator;
 import Shop.ProductProfile;
 import Shop.ShopProfile;
+import Tools.Logger;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -139,9 +140,8 @@ public class GUIController {
     private void setupStartButton() {
         startConfigButton.setText("Start simulation");
         startConfigButton.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
+            if (event.getButton().equals(MouseButton.PRIMARY) && chooseOutputFile()) {
                 // do iets als op de knop geklikt wordt;
-
 
                 // shop
                 ShopProfile.setEnvironmentalAdvertisement(getPercentage(shopEATextField));
@@ -211,6 +211,22 @@ public class GUIController {
                 setupStartButton();
             }
         });
+    }
+
+    private boolean chooseOutputFile() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choose save location");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Comma seperated values (*.csv)", "*.csv");
+        fileChooser.getExtensionFilters().add(extFilter);
+        File file = fileChooser.showSaveDialog(startConfigButton.getScene().getWindow());
+        if (file != null) {
+            if (file.exists() && !file.delete()) {
+                return false;
+            }
+            Logger.file = file;
+            return true;
+        }
+        return false;
     }
 
     private void initializeConfigButtons() {

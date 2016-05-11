@@ -17,13 +17,14 @@ import java.util.Date;
  *
  */
 public class Logger {
-    private static final String FILE_NAME = "deliveries.csv";
+    //public static final String FILE_NAME = "deliveries.csv";
+    public static File file = null;
     private static boolean first = true;
 
     public static void writeDelivery(Agent agent, ProductProfile product, CollectionPoint cp, Date today, Date earliest, Date latest, int beginNumOfDays, int endNumOfDays,
                                      boolean isHomeDelivery, boolean isInfluenced, Date recommendedDate, CollectionPoint recommendedCP) {
         try {
-            File file = new File(FILE_NAME);
+            //File file = new File(FILE_NAME);
 
             FileWriter writer = new FileWriter(file, true);
 
