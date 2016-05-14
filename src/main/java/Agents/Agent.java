@@ -49,11 +49,9 @@ public class Agent {
         double dist = this.location.distance(agent.getLocation());
         System.out.println("Distance between agents: "+dist);
         // to far
-        //TODO OVERRIDE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        // use Geolaction.MAX
-        if(dist >= 100) return false;
+        if(dist >= 1 && !RNG.chance(1/dist, 0,1)) return false;
         // not influenced
-        if(this.profile.getSusceptibility()> RNG.getInstance().getDouble(0, 1)){
+        if(!RNG.chance(this.profile.getSusceptibility(),0, 1)){
             System.out.println("But not influenced");
             return false;
         }
@@ -62,7 +60,10 @@ public class Agent {
         double wb = this.profile.getWB();
         //TODO
         // double newWB = wb + (1-wb)*((100-dist*GeoLocation.MAX_DIST_TO_BE_INFLUENCED_IN_KM)/100);
-        double newWB = wb + (1-wb)*((100-dist*GeoLocation.MAX_DIST_TO_BE_INFLUENCED_IN_KM)/(100*100));
+        double newWB;
+        if(dist<=1) newWB = wb + (1-wb)*(RNG.getInstance().getDouble(0.5,0.95));
+        else newWB = wb + (1-wb)*(1/dist);
+
         this.profile.setWB(newWB);
         System.out.println("WB changed from "+wb+" to "+newWB);
 
