@@ -1,6 +1,7 @@
 package Agents;
 
 import DecisionMaker.DecisionMaker;
+import GUI.GUIController;
 import Shop.ProductProfile;
 import Tools.RNG;
 
@@ -16,7 +17,7 @@ public class PurchaseThreadPool implements Runnable{
     public boolean stop = false;
     public static final int CHANCE_INFLUENCED_AGENT_WILL_SHOP = 70;
 
-
+    private GUIController gui;
 
     private boolean influencedByPrevAgent = false;
     private Agent prevAgent = null;
@@ -27,10 +28,11 @@ public class PurchaseThreadPool implements Runnable{
 
     private static HashMap<Date,ArrayList<Agent>> deliveries = new HashMap<>();
 
-    public PurchaseThreadPool(ArrayList<Agent> agentList, ArrayList<ProductProfile> productList, ArrayList<CollectionPoint> cps) {
+    public PurchaseThreadPool(ArrayList<Agent> agentList, ArrayList<ProductProfile> productList, ArrayList<CollectionPoint> cps, GUIController gui) {
         EntityPool.setAgents(agentList);
         EntityPool.setProducts(productList);
         EntityPool.setCollectionPoints(cps);
+        this.gui = gui;
     }
 
     @Override
@@ -59,7 +61,7 @@ public class PurchaseThreadPool implements Runnable{
                 System.out.println("\t--------------- PurchaseThread started ---------------");
                 System.out.println("\t "+agent);
                 System.out.println("\t "+product);
-                influencedAgent = new PurchaseThread(agent, product, influencedByPrevAgent, today).start();
+                influencedAgent = new PurchaseThread(agent, product, influencedByPrevAgent, today, gui).start();
                 System.out.println("\t--------------- PurchaseThread ended ---------------");
                 prevAgent = agent;
                 makeCPOffer();

@@ -2,7 +2,9 @@ package Tools;
 
 import Agents.Agent;
 import Agents.CollectionPoint;
+import GUI.GUIController;
 import Shop.ProductProfile;
+import javafx.application.Platform;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -25,6 +27,8 @@ public class Logger {
     private static int recommendedCPCounter = 0;
     private static double totalBeginNumOfDays = 0, totalEndNumOfDays= 0;
     private static int numOfLogs = 0;
+
+    public static GUIController gui;
 
     public static void writeDelivery(Agent agent, ProductProfile product, CollectionPoint cp, Date today, Date earliest, Date latest, int beginNumOfDays, int endNumOfDays,
                                      boolean isHomeDelivery, boolean isInfluenced, Date recommendedDate, CollectionPoint recommendedCP) {
@@ -74,6 +78,7 @@ public class Logger {
         totalBeginNumOfDays += beginNumOfDays;
         totalEndNumOfDays += endNumOfDays;
         numOfLogs++;
+        updateGUI();
     }
 
     private static void addLine(FileWriter writer, ArrayList<String> arguments) throws IOException {
@@ -113,5 +118,33 @@ public class Logger {
         writer.append(';');
         writer.append("recommendedCP");
         writer.append('\n');
+    }
+
+    private static void updateGUI() {
+        Platform.runLater(() -> {
+            gui.updateStatistics(getHomeDeliveredPercentage(), getInfluencedPercentage(), getRecommendedCPPercentage(),
+                    getMeanBeginNumOfDays(), getMeanEndNumOfDays());
+        });
+    }
+
+
+    private static double getHomeDeliveredPercentage() {
+        return isHomeDeliveryCounter/(double)numOfLogs;
+    }
+
+    private static double getInfluencedPercentage() {
+        return isInfluencedCounter/(double)numOfLogs;
+    }
+
+    private static double getRecommendedCPPercentage() {
+        return recommendedCPCounter/(double)numOfLogs;
+    }
+
+    private static double getMeanBeginNumOfDays() {
+        return totalBeginNumOfDays / (double)numOfLogs;
+    }
+
+    private static double getMeanEndNumOfDays() {
+        return totalEndNumOfDays / (double)numOfLogs;
     }
 }

@@ -16,6 +16,8 @@ import javafx.scene.input.MouseButton;
 import javafx.stage.FileChooser;
 
 import java.io.*;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -23,6 +25,8 @@ import java.util.HashMap;
  * Created by Lukas on 19-Apr-16.
  */
 public class GUIController {
+
+
 
     private PurchaseThreadPool pool = null;
 
@@ -90,6 +94,15 @@ public class GUIController {
     @FXML
     public Tab simulationTab;
     public Button startConfigButton;
+    public TextField statHomeDelivery;
+    public TextField statInfluence;
+    public TextField statCP;
+    public TextField statStart;
+    public TextField statEnd;
+    public TextField statBuy;
+    public TextField statNotBuy;
+    public int statBuyAmount;
+    public int statNotBuyAmount;
 
     @FXML
     public Button saveConfigButton;
@@ -98,6 +111,7 @@ public class GUIController {
 
     @FXML
     public void initialize() {
+        Logger.gui = this;
         setupStartButton();
 
 
@@ -132,6 +146,12 @@ public class GUIController {
 
         // Collection points
         setNotZeroTextField(CPTextField, 25);
+
+        // Stats
+        statBuyAmount = 0;
+        statNotBuyAmount = 0;
+        statBuy.setText("0");
+        statNotBuy.setText("0");
 
         // Config buttons
         initializeConfigButtons();
@@ -194,7 +214,7 @@ public class GUIController {
 
                 setupStopButton();
 
-                pool = new PurchaseThreadPool(agents, products, cps);
+                pool = new PurchaseThreadPool(agents, products, cps, this);
 
                 new Thread(pool).start();
 
@@ -355,5 +375,22 @@ public class GUIController {
     }
 
 
+    public void incrementWillBuy() {
+        statBuyAmount++;
+        statBuy.setText(Integer.toString(statBuyAmount));
+    }
 
+    public void incrementWillNotBuy() {
+        statNotBuyAmount++;
+        statNotBuy.setText(Integer.toString(statNotBuyAmount));
+    }
+
+    public void updateStatistics(double homeDeliveredPercentage, double influencedPercentage, double recommendedCPPercentage, double meanBeginNumOfDays, double meanEndNumOfDays) {
+        NumberFormat formatter = new DecimalFormat("#0.00");
+        statHomeDelivery.setText(formatter.format(homeDeliveredPercentage*100) +"%");
+        statInfluence.setText(formatter.format(influencedPercentage*100)+"%");
+        statCP.setText(formatter.format(recommendedCPPercentage*100)+"%");
+        statStart.setText(formatter.format(meanBeginNumOfDays));
+        statEnd.setText(formatter.format(meanEndNumOfDays));
+    }
 }

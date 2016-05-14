@@ -1,7 +1,9 @@
 package Agents;
 
 import DecisionMaker.DecisionMaker;
+import GUI.GUIController;
 import Shop.ProductProfile;
+import javafx.application.Platform;
 
 import java.util.Date;
 
@@ -15,12 +17,14 @@ class PurchaseThread {
     private ProductProfile product;
     private CollectionPoint cp;
     private Date today;
+    private GUIController gui;
 
-    PurchaseThread(Agent agent, ProductProfile product, boolean influencedByPrevAgent, Date today) {
+    PurchaseThread(Agent agent, ProductProfile product, boolean influencedByPrevAgent, Date today, GUIController gui) {
         this.agent = agent;
         this.product = product;
         this.influencedByPrevAgent = influencedByPrevAgent;
         this.today = (Date) today.clone();
+        this.gui = gui;
     }
 
     Agent start() throws Exception {
@@ -28,9 +32,16 @@ class PurchaseThread {
 
         if(!decisionMaker.willBuy()){
             System.out.println("\t\t Will NOT buy");
+            Platform.runLater(() -> {
+                gui.incrementWillNotBuy();
+            });
+
             return null;
         }else{
             System.out.println("\t\t Will buy");
+            Platform.runLater(() -> {
+                gui.incrementWillBuy();
+            });
         }
 
         boolean isHomeDelivery = decisionMaker.deliveryToHome(this.influencedByPrevAgent);
