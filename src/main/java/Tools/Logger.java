@@ -17,15 +17,21 @@ import java.util.Date;
  *
  */
 public class Logger {
-    //public static final String FILE_NAME = "deliveries.csv";
     public static File file = null;
     private static boolean first = true;
 
+    private static int isHomeDeliveryCounter =0;
+    private static int isInfluencedCounter = 0;
+    private static int recommendedCPCounter = 0;
+    private static double totalBeginNumOfDays = 0, totalEndNumOfDays= 0;
+    private static int numOfLogs = 0;
+
     public static void writeDelivery(Agent agent, ProductProfile product, CollectionPoint cp, Date today, Date earliest, Date latest, int beginNumOfDays, int endNumOfDays,
                                      boolean isHomeDelivery, boolean isInfluenced, Date recommendedDate, CollectionPoint recommendedCP) {
-        try {
-            //File file = new File(FILE_NAME);
 
+
+        updateVariables(isHomeDelivery, isInfluenced, recommendedCP, beginNumOfDays, endNumOfDays);
+        try {
             FileWriter writer = new FileWriter(file, true);
 
             if(first){
@@ -59,6 +65,15 @@ public class Logger {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private static void updateVariables(boolean isHomeDelivery, boolean isInfluenced, CollectionPoint recommendedCP, int beginNumOfDays, int endNumOfDays) {
+        if(isHomeDelivery) isHomeDeliveryCounter++;
+        if(isInfluenced) isInfluencedCounter++;
+        if(recommendedCP!=null) recommendedCPCounter++;
+        totalBeginNumOfDays += beginNumOfDays;
+        totalEndNumOfDays += endNumOfDays;
+        numOfLogs++;
     }
 
     private static void addLine(FileWriter writer, ArrayList<String> arguments) throws IOException {

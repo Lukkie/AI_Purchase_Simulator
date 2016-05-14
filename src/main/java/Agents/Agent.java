@@ -58,8 +58,6 @@ public class Agent {
 
         // adjust willingnessToBuy and recommended CP if not null
         double wb = this.profile.getWB();
-        //TODO
-        // double newWB = wb + (1-wb)*((100-dist*GeoLocation.MAX_DIST_TO_BE_INFLUENCED_IN_KM)/100);
         double newWB;
         if(dist<=1) newWB = wb + (1-wb)*(RNG.getInstance().getDouble(0.5,0.95));
         else newWB = wb + (1-wb)*(1/dist);
