@@ -147,4 +147,13 @@ public class Logger {
     private static double getMeanEndNumOfDays() {
         return totalEndNumOfDays / (double)numOfLogs;
     }
+
+    public static void clearStats() {
+        numOfLogs = 0;
+        isInfluencedCounter = 0;
+        isHomeDeliveryCounter = 0;
+        recommendedCPCounter = 0;
+        totalBeginNumOfDays = 0;
+        totalEndNumOfDays = 0;
+    }
 }

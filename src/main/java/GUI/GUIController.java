@@ -27,7 +27,7 @@ import java.util.HashMap;
 public class GUIController {
 
 
-
+    private boolean started = false;
     private PurchaseThreadPool pool = null;
 
     private ArrayList<TextField> textFields = new ArrayList<>();
@@ -211,7 +211,7 @@ public class GUIController {
                 CollectionPoint.pushList(cps);
 
 
-
+                started = true;
                 setupStopButton();
 
                 pool = new PurchaseThreadPool(agents, products, cps, this);
@@ -228,6 +228,10 @@ public class GUIController {
         startConfigButton.setOnMouseClicked(event -> {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
                 pool.stop = true;
+                started = false;
+                Logger.clearStats();
+                statBuyAmount = 0;
+                statNotBuyAmount = 0;
                 setupStartButton();
             }
         });
@@ -376,21 +380,27 @@ public class GUIController {
 
 
     public void incrementWillBuy() {
-        statBuyAmount++;
-        statBuy.setText(Integer.toString(statBuyAmount));
+        if (started) {
+            statBuyAmount++;
+            statBuy.setText(Integer.toString(statBuyAmount));
+        }
     }
 
     public void incrementWillNotBuy() {
-        statNotBuyAmount++;
-        statNotBuy.setText(Integer.toString(statNotBuyAmount));
+        if (started) {
+            statNotBuyAmount++;
+            statNotBuy.setText(Integer.toString(statNotBuyAmount));
+        }
     }
 
     public void updateStatistics(double homeDeliveredPercentage, double influencedPercentage, double recommendedCPPercentage, double meanBeginNumOfDays, double meanEndNumOfDays) {
-        NumberFormat formatter = new DecimalFormat("#0.00");
-        statHomeDelivery.setText(formatter.format(homeDeliveredPercentage*100) +"%");
-        statInfluence.setText(formatter.format(influencedPercentage*100)+"%");
-        statCP.setText(formatter.format(recommendedCPPercentage*100)+"%");
-        statStart.setText(formatter.format(meanBeginNumOfDays));
-        statEnd.setText(formatter.format(meanEndNumOfDays));
+        if (started) {
+            NumberFormat formatter = new DecimalFormat("#0.00");
+            statHomeDelivery.setText(formatter.format(homeDeliveredPercentage * 100) + "%");
+            statInfluence.setText(formatter.format(influencedPercentage * 100) + "%");
+            statCP.setText(formatter.format(recommendedCPPercentage * 100) + "%");
+            statStart.setText(formatter.format(meanBeginNumOfDays));
+            statEnd.setText(formatter.format(meanEndNumOfDays));
+        }
     }
 }
