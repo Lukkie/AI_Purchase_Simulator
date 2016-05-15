@@ -149,6 +149,7 @@ public class Logger {
     }
 
     public static void clearStats() {
+        first = true;
         numOfLogs = 0;
         isInfluencedCounter = 0;
         isHomeDeliveryCounter = 0;
