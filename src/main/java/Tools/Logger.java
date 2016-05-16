@@ -65,15 +65,12 @@ public class Logger {
 
             addLine(writer, arguments);
 
-
-            if(numOfLogs%100==0){
                 arguments = new ArrayList<>();
                 arguments.add(""+numOfLogs);
                 double ratio = ((double) hasBoughtFromRecommendedCPCounter/ (double)numOfLogs)*100;
-                arguments.add(""+ratio);
+                arguments.add((""+ratio).replace(".",","));
 
                 addLine(writerBuyVsCP, arguments);
-            }
 
             writer.flush();
             writer.close();
