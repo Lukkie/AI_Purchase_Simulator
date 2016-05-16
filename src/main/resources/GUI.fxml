@@ -209,8 +209,8 @@
                     </rowConstraints>
                      <children>
                         <Label text="Home delivery percentage" />
-                        <Label text="Influence percentage" GridPane.rowIndex="1" />
-                        <Label text="Recommend Collection Point percentage" GridPane.rowIndex="2" />
+                        <Label text="Collection at recommended CP percentage" GridPane.rowIndex="1" />
+                        <Label text="Recommended Collection Point percentage" GridPane.rowIndex="2" />
                         <Label text="Mean start of delivery interval" GridPane.rowIndex="3" />
                         <Label text="Mean end of delivery interval" GridPane.rowIndex="4" />
                         <TextField fx:id="statHomeDelivery" editable="false" GridPane.columnIndex="1" />

@@ -23,18 +23,18 @@ public class Logger {
     private static boolean first = true;
 
     private static int isHomeDeliveryCounter =0;
-    private static int isInfluencedCounter = 0;
-    private static int recommendedCPCounter = 0;
+    private static int hasBoughtFromRecommendedCPCounter = 0;
+    private static int recommendedCPCounter = 0; // number of recommendations for CP's (not necessarily chosen)
     private static double totalBeginNumOfDays = 0, totalEndNumOfDays= 0;
     private static int numOfLogs = 0;
 
     public static GUIController gui;
 
     public static void writeDelivery(Agent agent, ProductProfile product, CollectionPoint cp, Date today, Date earliest, Date latest, int beginNumOfDays, int endNumOfDays,
-                                     boolean isHomeDelivery, boolean isInfluenced, Date recommendedDate, CollectionPoint recommendedCP) {
+                                     boolean isHomeDelivery, boolean hasBoughtFromRecommendedCP, Date recommendedDate, CollectionPoint recommendedCP) {
 
 
-        updateVariables(isHomeDelivery, isInfluenced, recommendedCP, beginNumOfDays, endNumOfDays);
+        updateVariables(isHomeDelivery, hasBoughtFromRecommendedCP, recommendedCP, beginNumOfDays, endNumOfDays);
         try {
             FileWriter writer = new FileWriter(file, true);
 
@@ -55,7 +55,7 @@ public class Logger {
             arguments.add(String.valueOf(beginNumOfDays));
             arguments.add(String.valueOf(endNumOfDays));
             arguments.add(""+isHomeDelivery);
-            arguments.add(""+isInfluenced);
+            arguments.add(""+hasBoughtFromRecommendedCP);
             if(recommendedDate==null) arguments.add("NONE");
             else arguments.add(df.format(recommendedDate));
             if(recommendedCP==null) arguments.add("NONE");
@@ -71,9 +71,9 @@ public class Logger {
         }
     }
 
-    private static void updateVariables(boolean isHomeDelivery, boolean isInfluenced, CollectionPoint recommendedCP, int beginNumOfDays, int endNumOfDays) {
+    private static void updateVariables(boolean isHomeDelivery, boolean hasBoughtFromRecommendedCP, CollectionPoint recommendedCP, int beginNumOfDays, int endNumOfDays) {
         if(isHomeDelivery) isHomeDeliveryCounter++;
-        if(isInfluenced) isInfluencedCounter++;
+        if(hasBoughtFromRecommendedCP) hasBoughtFromRecommendedCPCounter++;
         if(recommendedCP!=null) recommendedCPCounter++;
         totalBeginNumOfDays += beginNumOfDays;
         totalEndNumOfDays += endNumOfDays;
@@ -122,7 +122,7 @@ public class Logger {
 
     private static void updateGUI() {
         Platform.runLater(() -> {
-            gui.updateStatistics(getHomeDeliveredPercentage(), getInfluencedPercentage(), getRecommendedCPPercentage(),
+            gui.updateStatistics(getHomeDeliveredPercentage(), hasBoughtFromRecommendedCPPercentage(), getRecommendedCPPercentage(),
                     getMeanBeginNumOfDays(), getMeanEndNumOfDays());
         });
     }
@@ -132,8 +132,8 @@ public class Logger {
         return isHomeDeliveryCounter/(double)numOfLogs;
     }
 
-    private static double getInfluencedPercentage() {
-        return isInfluencedCounter/(double)numOfLogs;
+    private static double hasBoughtFromRecommendedCPPercentage() {
+        return hasBoughtFromRecommendedCPCounter /(double)numOfLogs;
     }
 
     private static double getRecommendedCPPercentage() {
@@ -151,7 +151,7 @@ public class Logger {
     public static void clearStats() {
         first = true;
         numOfLogs = 0;
-        isInfluencedCounter = 0;
+        hasBoughtFromRecommendedCPCounter = 0;
         isHomeDeliveryCounter = 0;
         recommendedCPCounter = 0;
         totalBeginNumOfDays = 0;
