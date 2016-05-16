@@ -166,7 +166,7 @@
                         <Slider fx:id="shopServiceSlider" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                         <TextField fx:id="shopEATextField" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                         <TextField fx:id="shopServiceTextField" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                        <Label text="Environmental advertisment" GridPane.rowIndex="3" />
+                        <Label text="Environmental advertisement" GridPane.rowIndex="3" />
                         <Label text="Service after purchase" GridPane.rowIndex="4" />
                      </children>
                      <columnConstraints>
