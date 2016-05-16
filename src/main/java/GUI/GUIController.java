@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.stage.FileChooser;
+import org.apache.commons.math3.stat.descriptive.summary.Product;
 
 import java.io.*;
 import java.text.DecimalFormat;
@@ -105,6 +106,7 @@ public class GUIController {
     public TextField statEnd;
     public TextField statBuy;
     public TextField statNotBuy;
+    public CheckBox randomPopulationCheckbox;
     public int statBuyAmount;
     public int statNotBuyAmount;
 
@@ -117,10 +119,11 @@ public class GUIController {
 
     @FXML
     public void initialize() {
+        randomPopulationCheckbox.setSelected(false);
+        randomPopulationCheckbox.setIndeterminate(false);
         Logger.gui = this;
         setupStartButton();
         setupRandomButton();
-
 
         // Agents
         initializeSliderAndTextField(agentSelfPerceptionSlider, agentSelfPerceptionTextField, 50, 0, 100, 1);
@@ -181,7 +184,9 @@ public class GUIController {
         startConfigButton.setText("Start simulation");
         startConfigButton.setOnMouseClicked(event -> {
             if (event.getButton().equals(MouseButton.PRIMARY) && chooseOutputFile()) {
-                // do iets als op de knop geklikt wordt;
+
+                ArrayList<Agent> agents;
+                ArrayList<ProductProfile> products;
 
                 // shop
                 ShopProfile.setEnvironmentalAdvertisement(getPercentage(shopEATextField));
@@ -190,42 +195,51 @@ public class GUIController {
                 ShopProfile.setGreenPerceivedTrust(getPercentage(shopGPTTextField));
                 ShopProfile.setService(getPercentage(shopServiceTextField));
 
+                if (randomPopulationCheckbox.isSelected()) {
 
-                // agents
-                AgentGenerator ag = new AgentGenerator();
-                ag.setAgentAmount(Integer.parseInt(agentNumberTextField.getText()));
-                ag.setSelfPerceptionFactor(getPercentage(agentSelfPerceptionTextField));
-                ag.setPriceQualityPerceptionFactor(getPercentage(agentPriceQualityPerceptionTextField));
-                ag.setGreenPurchaseIntentionFactor(getPercentage(agentGreenPurchaseIntentionTextField));
-                ag.setNeedRecognitionFactor(getPercentage(agentNeedRecognitionTextField));
-                ag.setWillingnessToBuyFactor(getPercentage(agentWTBTextField));
-                ag.setLocationFlexibilityFactor(getPercentage(agentLocationFlexibilityTextField));
-                ag.setSusceptibilityCollectionPointFactor(getPercentage(agentSusceptibilityCPTextField));
-                ag.setCollectionPointRecommendationFactorFactor(getPercentage(agentCPRecommendationTextField));
-                ag.setAtHomeFactor(getPercentage(agentPercentageAtHomeTextField));
-                ag.setShopReputationFactor(getPercentage(agentShopReputationTextField));
-                ArrayList<Agent> agents = ag.generateAgents();
-                for (Agent a: agents) {
-                    System.out.println(a.toString());
+                    // agents
+                    AgentGenerator ag = new AgentGenerator();
+                    agents = ag.generateRandomAgents();
+
+                    // products
+                    ProductGenerator pg = new ProductGenerator();
+                    products = pg.generateRandomProducts();
+                } else {
+                    // agents
+                    AgentGenerator ag = new AgentGenerator();
+                    ag.setAgentAmount(Integer.parseInt(agentNumberTextField.getText()));
+                    ag.setSelfPerceptionFactor(getPercentage(agentSelfPerceptionTextField));
+                    ag.setPriceQualityPerceptionFactor(getPercentage(agentPriceQualityPerceptionTextField));
+                    ag.setGreenPurchaseIntentionFactor(getPercentage(agentGreenPurchaseIntentionTextField));
+                    ag.setNeedRecognitionFactor(getPercentage(agentNeedRecognitionTextField));
+                    ag.setWillingnessToBuyFactor(getPercentage(agentWTBTextField));
+                    ag.setLocationFlexibilityFactor(getPercentage(agentLocationFlexibilityTextField));
+                    ag.setSusceptibilityCollectionPointFactor(getPercentage(agentSusceptibilityCPTextField));
+                    ag.setCollectionPointRecommendationFactorFactor(getPercentage(agentCPRecommendationTextField));
+                    ag.setAtHomeFactor(getPercentage(agentPercentageAtHomeTextField));
+                    ag.setShopReputationFactor(getPercentage(agentShopReputationTextField));
+                    agents = ag.generateAgents();
+                    /*for (Agent a : agents) {
+                        System.out.println(a.toString());
+                    }*/
+
+
+                    // products
+                    ProductGenerator pg = new ProductGenerator();
+                    pg.setAmount(Integer.parseInt(productNumberTextField.getText()));
+                    pg.setNeedRecognitionFactor(getPercentage(productNeedRecognitionTextField));
+                    pg.setGreenPerceivedValueFactor(getPercentage(productGPVTextField));
+                    pg.setAvailability(getPercentage(productAvailabilityTextField));
+                    pg.setPrice(Double.parseDouble(productMeanPriceTextField.getText()));
+                    pg.setPriceStdDev(Double.parseDouble(productStddevTextField.getText()));
+                    products = pg.generateProducts();
+                    /*for (ProductProfile p : products) {
+                        System.out.println(p.toString());
+                    }*/
                 }
-
-
-                // products
-                ProductGenerator pg = new ProductGenerator();
-                pg.setAmount(Integer.parseInt(productNumberTextField.getText()));
-                pg.setNeedRecognitionFactor(getPercentage(productNeedRecognitionTextField));
-                pg.setGreenPerceivedValueFactor(getPercentage(productGPVTextField));
-                pg.setAvailability(getPercentage(productAvailabilityTextField));
-                pg.setPrice(Double.parseDouble(productMeanPriceTextField.getText()));
-                pg.setPriceStdDev(Double.parseDouble(productStddevTextField.getText()));
-                ArrayList<ProductProfile> products = pg.generateProducts();
-                for (ProductProfile p : products) {
-                    System.out.println(p.toString());
-                }
-
                 CollectionPointGenerator cpg = new CollectionPointGenerator();
                 ArrayList<CollectionPoint> cps = cpg.generateCollectionPoints(Integer.parseInt(CPTextField.getText()), agents);
-                for (CollectionPoint cp: cps) {
+                for (CollectionPoint cp : cps) {
                     System.out.println(cp.toString());
                 }
                 CollectionPoint.pushList(cps);
@@ -237,7 +251,6 @@ public class GUIController {
                 pool = new PurchaseThreadPool(agents, products, cps, this);
 
                 new Thread(pool).start();
-
             }
         });
     }
