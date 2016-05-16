@@ -37,6 +37,8 @@ public class Logger {
         updateVariables(isHomeDelivery, hasBoughtFromRecommendedCP, recommendedCP, beginNumOfDays, endNumOfDays);
         try {
             FileWriter writer = new FileWriter(file, true);
+            File fileBuyVsCP = new File(file.getPath().replace(".csv","")+"_buy_vs_CP.csv");
+            FileWriter writerBuyVsCP = new FileWriter(fileBuyVsCP,true);
 
             if(first){
                 addHeader(writer);
@@ -64,8 +66,20 @@ public class Logger {
             addLine(writer, arguments);
 
 
+            if(numOfLogs%100==0){
+                arguments = new ArrayList<>();
+                arguments.add(""+numOfLogs);
+                double ratio = ((double) hasBoughtFromRecommendedCPCounter/ (double)numOfLogs)*100;
+                arguments.add(""+ratio);
+
+                addLine(writerBuyVsCP, arguments);
+            }
+
             writer.flush();
             writer.close();
+
+            writerBuyVsCP.flush();
+            writerBuyVsCP.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

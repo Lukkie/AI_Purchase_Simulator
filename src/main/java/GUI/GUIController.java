@@ -438,4 +438,8 @@ public class GUIController {
             statEnd.setText(formatter.format(meanEndNumOfDays));
         }
     }
+
+    public int getStatBuyAmount() {
+        return statBuyAmount;
+    }
 }

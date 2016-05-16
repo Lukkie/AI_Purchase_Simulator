@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * Created by Gilles Callebaut on 19/04/2016.
  *
  */
-public class CollectionPoint {
+public class CollectionPoint{
     private GeoLocation location;
     private String name;
     private int count = 0;
@@ -17,6 +17,7 @@ public class CollectionPoint {
     private static int CHANCE_CLOSEST_CP = 90;
 
     private static ArrayList<CollectionPoint> CPs = new ArrayList<>();
+    private int counter;
 
     public static void pushList(ArrayList<CollectionPoint> collectionPoints){
         CPs.addAll(collectionPoints);
@@ -77,5 +78,45 @@ public class CollectionPoint {
 
     public ArrayList<Agent> getNearbyAgents() {
         return nearbyAgents;
+    }
+
+    public CollectionPoint(){
+
+    }
+
+    CollectionPoint(CollectionPoint cp) {
+        this.location = cp.getLocation();
+        this.name = cp.getName();
+        this.count = cp.getCounter();
+        this.nearbyAgents = cp.getNearbyAgents();
+    }
+
+    public int getCounter() {
+        return counter;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CollectionPoint that = (CollectionPoint) o;
+
+        if (count != that.count) return false;
+        if (counter != that.counter) return false;
+        if (location != null ? !location.equals(that.location) : that.location != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        return nearbyAgents != null ? nearbyAgents.equals(that.nearbyAgents) : that.nearbyAgents == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = location != null ? location.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + count;
+        result = 31 * result + (nearbyAgents != null ? nearbyAgents.hashCode() : 0);
+        result = 31 * result + counter;
+        return result;
     }
 }

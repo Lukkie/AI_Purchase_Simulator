@@ -118,7 +118,12 @@ public class AgentProfile {
     }
 
     public CollectionPoint getRecommendedCP() {
-        return recommendedCP;
+        if(recommendedCP==null) return null;
+        CollectionPoint rCP = new CollectionPoint(recommendedCP);
+        if(Tools.RNG.chance(80,0,100)){
+            recommendedCP = null;
+        }
+        return rCP;
     }
 
     @Override

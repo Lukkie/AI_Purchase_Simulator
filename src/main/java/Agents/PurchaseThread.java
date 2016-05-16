@@ -39,9 +39,7 @@ class PurchaseThread {
             return null;
         }else{
             System.out.println("\t\t Will buy");
-            Platform.runLater(() -> {
-                gui.incrementWillBuy();
-            });
+            Platform.runLater(() -> gui.incrementWillBuy());
         }
 
         boolean isHomeDelivery = decisionMaker.deliveryToHome(this.influencedByPrevAgent);
