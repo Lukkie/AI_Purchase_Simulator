@@ -18,6 +18,7 @@ public class DecisionMaker {
     private ProductProfile product;
     private CollectionPoint cp;
     private AgentProfile agentProfile;
+    public boolean buyBasedOnRecommendation = false;
 
     private int beginNumberOfDays = 0, endNumberOfDays = 0;
 
@@ -96,7 +97,7 @@ public class DecisionMaker {
         If agent is alwaysHome he has a chance of 99% to request home delivery
          */
         if (this.agentProfile.isAlwaysAtHome()) {
-            if (RNG.chance(99, 0, 100)) {
+            if (RNG.chance(90, 0, 100)) {
                 return true;
             }
         }
@@ -111,6 +112,7 @@ public class DecisionMaker {
 
         if (chanceCP < rnd) return true; // delivery to home is selected
 
+        buyBasedOnRecommendation = false;
         // if susceptible for CP -> choose CP
         if (RNG.chance(agentProfile.getSusceptibility(), 0, 1)) {
             System.out.println("\tAgent is susceptible for CP");
@@ -118,6 +120,8 @@ public class DecisionMaker {
             System.out.println("\tRecommended CP: " + cp);
             if (cp == null) {
                 cp = CollectionPoint.getRandomClosestCP(agent.getLocation());
+            }else{
+                buyBasedOnRecommendation = true;
             }
         }
         // else choose closest CP

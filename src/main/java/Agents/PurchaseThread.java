@@ -74,7 +74,7 @@ class PurchaseThread {
 
 
         agent.setLastPurchaseDate(today);
-        Tools.Logger.writeDelivery(agent,product,cp,today, earliest,latest,beginNumOfDays,endNumOfDays,isHomeDelivery,isOtherAgentInfluenced,recommendedDate,agent.getProfile().getRecommendedCP());
+        Tools.Logger.writeDelivery(agent,product,cp,today, earliest,latest,beginNumOfDays,endNumOfDays,isHomeDelivery,decisionMaker.buyBasedOnRecommendation,recommendedDate,agent.getProfile().getRecommendedCP());
         Date lastDate = Tools.DateUtil.addDays(today,endNumOfDays);
         PurchaseThreadPool.addDelivery(this.agent, lastDate);
 
