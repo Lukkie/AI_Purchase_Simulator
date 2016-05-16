@@ -9,6 +9,7 @@ import Generators.ProductGenerator;
 import Shop.ProductProfile;
 import Shop.ShopProfile;
 import Tools.Logger;
+import Tools.RNG;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -33,6 +34,9 @@ public class GUIController {
     private ArrayList<TextField> textFields = new ArrayList<>();
     private ArrayList<Integer> values = new ArrayList<>();
     private HashMap<TextField, Slider> tuples = new HashMap<>();
+    private ArrayList<Integer> minSliders = new ArrayList<>();
+    private ArrayList<Integer> maxSliders = new ArrayList<>();
+
 
     @FXML
     public Tab agentsTab;
@@ -107,13 +111,15 @@ public class GUIController {
     @FXML
     public Button saveConfigButton;
     public Button loadConfigButton;
+    public Button randomButton;
+
 
 
     @FXML
     public void initialize() {
         Logger.gui = this;
         setupStartButton();
-
+        setupRandomButton();
 
 
         // Agents
@@ -155,6 +161,20 @@ public class GUIController {
 
         // Config buttons
         initializeConfigButtons();
+    }
+
+    private void setupRandomButton() {
+        randomButton.setOnMouseClicked(event -> {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                ArrayList<Integer> newValues = new ArrayList<Integer>();
+                for (int i = 0; i < textFields.size(); i++) {
+                    int value = RNG.getInstance().getInt(minSliders.get(i), maxSliders.get(i));
+                    changeValue(i, textFields.get(i), value);
+                    newValues.add(value);
+                }
+                values = newValues;
+            }
+        });
     }
 
     private void setupStartButton() {
@@ -376,6 +396,8 @@ public class GUIController {
         textFields.add(textField);
         values.add(defaultValue);
         tuples.put(textField, slider);
+        maxSliders.add(max);
+        minSliders.add(min);
     }
 
 
