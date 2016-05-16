@@ -62,6 +62,40 @@ public class AgentGenerator {
 
     }
 
+    public ArrayList<Agent> generateRandomAgents() {
+        RNG rng = RNG.getInstance();
+
+        ArrayList<Agent> agents = new ArrayList<>();
+        for (int i = 0; i < agentAmount; i++) {
+            Agent agent = new Agent();
+
+            AgentProfile ap = new AgentProfile();
+            ap.setSelfPerception(rng.getDouble(0,1));
+            ap.setWillingnessToBuy(rng.getDouble(0,1));
+            ap.setLocationFlexibility(rng.getDouble(0,1));
+            ap.setPriceQualityPerception(rng.getDouble(0,1));
+            ap.setGreenPurchaseIntention(rng.getDouble(0,1));
+            ap.setNeedRecognition(rng.getDouble(0,1));
+            ap.setSusceptibility(rng.getDouble(0,1));
+            ap.setCollectionPointRecommendationFactor(rng.getDouble(0,1));
+            ap.setReputationShop(rng.getDouble(0,1));
+            if (rng.nextDouble() <= atHomeFactor) ap.setAlwaysAtHome(true);
+            else ap.setAlwaysAtHome(false);
+
+            agent.setProfile(ap);
+
+
+            GeoLocation geo = rng.getRandomLocation();
+            agent.setLocation(geo);
+
+
+            agents.add(agent);
+        }
+
+        return agents;
+
+    }
+
     private double getValue(double mean, double stddev, RNG rng)  {
         double x = rng.nextGaussian(stddev, mean);
         if (x < 0) x = 0;

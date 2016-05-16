@@ -224,6 +224,7 @@
                         <TextField fx:id="statNotBuy" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                      </children>
                   </GridPane>
+                  <CheckBox fx:id="randomPopulationCheckbox" layoutX="298.0" layoutY="380.0" mnemonicParsing="false" text="Totally random population" />
                </children>
             </AnchorPane>
         </content>

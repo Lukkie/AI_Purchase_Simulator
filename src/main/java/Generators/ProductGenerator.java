@@ -35,6 +35,21 @@ public class ProductGenerator {
         return products;
     }
 
+    public ArrayList<ProductProfile> generateRandomProducts() {
+        RNG rng = RNG.getInstance();
+        ArrayList<ProductProfile> products = new ArrayList<>();
+        for (int i = 0; i < amount; i++) {
+            ProductProfile product = new ProductProfile();
+            product.setGreenPerceivedValue(rng.getDouble(0,1));
+            product.setNeedRecognition(rng.getDouble(0,1));
+            product.setAvailability(rng.getDouble(0,1));
+            product.setPrice(rng.getDouble(0,1));
+            products.add(product);
+        }
+
+        return products;
+    }
+
     private double getValue(double mean, double stddev, RNG rng)  {
         double x = rng.nextGaussian(stddev, mean);
         if (x < 0) x = 0;
@@ -72,5 +87,6 @@ public class ProductGenerator {
     public void setAvailability(double availability) {
         this.availability = availability;
     }
+
 
 }
