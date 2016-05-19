@@ -31,7 +31,7 @@ public class DecisionMaker {
 
     public boolean willBuy() throws Exception {
 
-        double GPIN = (18 / 100) * agentProfile.getGPI() + (13 / 100) * ShopProfile.getGPR() + (17 / 100) * ShopProfile.getGPT()
+        double GPIN = (18 / 100) * agentProfile.getGPI() + (13 / 100) * (1-ShopProfile.getGPR()) + (17 / 100) * ShopProfile.getGPT()
                 + (12 / 100) * ShopProfile.getGBI() + (32 / 100) * ShopProfile.getEA() + (8 / 100) * product.getGPV();
 
         // be sure the agent is influenced by the quality and the perceived price
